@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "scrypt": "^6.0.3"
+    "phantom": "^3.2.0"
   }
 }
