@@ -7,14 +7,14 @@ export default λ(async ({ html, css }) => {
   console.log('phantom', phantom);
   const instance = await phantom.create();
   const page = await instance.createPage();
-  // await page.on('onResourceRequested', (data) => {
-  //     console.info('Requesting', data.url);
-  // });
+  await page.on('onResourceRequested', (data) => {
+      console.info('Requesting', data.url);
+  });
 
   const status = await page.open('https://stackoverflow.com/');
   console.log(status);
 
-  const content = await page.property('content');
+  const content = page.property('content');
   console.log(content);
   await instance.exit();
   return content;
