@@ -9,7 +9,6 @@
   ],
   "plugins": [
     "transform-promise-to-bluebird",
-    "transform-runtime",
     ["transform-async-to-module-method", {
       "module": "bluebird",
       "method": "coroutine"
