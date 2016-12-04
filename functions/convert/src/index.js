@@ -1,6 +1,6 @@
 import λ from 'apex.js';
 import phantom from 'phantom';
-import { createReadStream, statSync, unlinkSync } from 'fs';
+import { createReadStream, statSync, unlinkSync, readdirSync } from 'fs';
 import template from './lib/template';
 
 Promise.coroutine.addYieldHandler(value => Promise.resolve(value));
@@ -27,7 +27,7 @@ export default λ(async ({ filename, html, css }) => {
   const content = await page.property('content');
 
   try {
-    console.log('rendering', content)
+    console.log('rendering', content);
     await page.render(filename);
   } catch (e) {
     console.log('error in render', e);
@@ -37,6 +37,8 @@ export default λ(async ({ filename, html, css }) => {
     await instance.exit();
   }
 
+  console.log('cwd', process.cwd());
+  console.log('dir', readdirSync(process.cwd()));
   const file = createReadStream(`./${filename}`);
   const stat = statSync(`./${filename}`);
   console.log('fileSize', stat.size);
