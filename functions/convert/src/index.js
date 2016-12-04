@@ -1,5 +1,5 @@
 import λ from 'apex.js';
-import phantom from 'phantom';
+const phantom = require('phantom');
 
 export default λ(async (e) => {
   console.log(e);
