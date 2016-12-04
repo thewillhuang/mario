@@ -14,7 +14,7 @@ module.exports = {
     'imagemagick',
     'aws-sdk',
     // [native c/c++] modules
-    // 'phantom',
+    'phantom',
   ],
   module: {
     loaders: [
