@@ -374,6 +374,10 @@ klaw@^1.0.0:
   optionalDependencies:
     graceful-fs "^4.1.9"
 
+linerstream@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/linerstream/-/linerstream-0.1.4.tgz#5de7bf69faa2b0f9d85e8332099b70e419a845d5"
+
 lodash@^4.14.0:
   version "4.17.2"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.2.tgz#34a3055babe04ce42467b607d700072c7ff6bf42"
@@ -426,12 +430,12 @@ pend@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/pend/-/pend-1.2.0.tgz#7a57eb550a6783f9115331fcf4663d5c8e007a50"
 
-phantom@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/phantom/-/phantom-3.2.0.tgz#f0cd1517cb64dad18d4f803fd18d7ff856afef7a"
+phantom@2.1.21:
+  version "2.1.21"
+  resolved "https://registry.yarnpkg.com/phantom/-/phantom-2.1.21.tgz#76b7790ff62cf09fbe922ae844b9fb745ce8bb28"
   dependencies:
+    linerstream "^0.1.4"
     phantomjs-prebuilt "^2.1.4"
-    split "^1.0.0"
     winston "^2.2.0"
 
 phantomjs-prebuilt@^2.1.4:
@@ -529,12 +533,6 @@ sntp@1.x.x:
   dependencies:
     hoek "2.x.x"
 
-split@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/split/-/split-1.0.0.tgz#c4395ce683abcd254bc28fe1dabb6e5c27dcffae"
-  dependencies:
-    through "2"
-
 sshpk@^1.7.0:
   version "1.10.1"
   resolved "https://registry.yarnpkg.com/sshpk/-/sshpk-1.10.1.tgz#30e1a5d329244974a1af61511339d595af6638b0"
@@ -575,10 +573,6 @@ supports-color@^2.0.0:
 throttleit@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/throttleit/-/throttleit-1.0.0.tgz#9e785836daf46743145a5984b6268d828528ac6c"
-
-through@2:
-  version "2.3.8"
-  resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
 
 tough-cookie@~2.3.0:
   version "2.3.2"
