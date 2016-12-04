@@ -13,7 +13,7 @@ module.exports = {
     // included modules on lambda
     'imagemagick',
     'aws-sdk',
-    // [native c/c++] modules and
+    // [native c/c++] modules
     'phantom',
   ],
   module: {
@@ -21,9 +21,6 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        query: {
-          cacheDirectory: true,
-        },
         exclude: /node_modules/,
       },
       {
