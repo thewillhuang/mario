@@ -1,6 +1,6 @@
 import λ from 'apex.js';
 import phantom from 'phantom';
-import { createReadStream, statSync, unlinkSync, readdirSync } from 'fs';
+import { createReadStream, statSync, unlinkSync, readdirSync, accessSync, F_OK } from 'fs';
 import template from './lib/template';
 
 Promise.coroutine.addYieldHandler(value => Promise.resolve(value));
@@ -39,9 +39,10 @@ export default λ(async ({ filename, html, css }) => {
 
   console.log('cwd', process.cwd());
   console.log('dir', readdirSync(process.cwd()));
-  const file = createReadStream(`./${filename}`);
-  const stat = statSync(`./${filename}`);
+  console.log('permission', accessSync(filename, fs.F_OK));
+  const file = createReadStream(filename);
+  const stat = statSync(filename);
   console.log('fileSize', stat.size);
-  unlinkSync(`./${filename}`);
+  unlinkSync(filename);
   return file;
 });
