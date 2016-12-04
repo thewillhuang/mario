@@ -1,6 +1,8 @@
 import λ from 'apex.js';
 import phantom from 'phantom';
 
+Promise.coroutine.addYieldHandler(value => Promise.resolve(value));
+
 export default λ(async ({ html, css }) => {
   console.log('html', html);
   console.log('css', css);
@@ -14,7 +16,7 @@ export default λ(async ({ html, css }) => {
   const status = await page.open('https://stackoverflow.com/');
   console.log(status);
 
-  const content = page.property('content');
+  const content = await page.property('content');
   console.log(content);
   await instance.exit();
   return content;
