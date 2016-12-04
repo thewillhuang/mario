@@ -21,7 +21,7 @@ export default λ(async ({ filename, html, css }) => {
     width: 1056,
     height: 816,
   });
-  page.set('property', template({ html, css }));
+  page.property('content', template({ html, css }));
   await page.render(filename, { format: 'pdf', quality: 100 });
   await instance.exit();
 
