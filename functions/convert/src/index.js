@@ -7,7 +7,7 @@ export default λ(async ({ html, css }) => {
   console.log('phantom', phantom);
   const instance = await phantom.create();
   const page = await instance.createPage();
-  await page.on("onResourceRequested", function (data) {
+  await page.on('onResourceRequested', (data) => {
       console.info('Requesting', data.url);
   });
 
@@ -16,6 +16,6 @@ export default λ(async ({ html, css }) => {
 
   const content = await page.property('content');
   console.log(content);
-
   await instance.exit();
+  return content;
 });
