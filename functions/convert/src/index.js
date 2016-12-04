@@ -1,10 +1,9 @@
 import λ from 'apex.js';
-const phantom = require('phantom');
+import phantom from 'phantom';
 
 export default λ(async (e) => {
-  console.log(e);
-  console.log(λ);
-  return true;
-  // console.log(phantom);
-  // return await phantom.create(['--ignore-ssl-errors=yes', '--load-images=no']);
+  console.log('e', e);
+  console.log('phantom', phantom);
+  return await phantom
+    .create(['--ignore-ssl-errors=yes', '--load-images=no']);
 });
