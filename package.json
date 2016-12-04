@@ -9,8 +9,7 @@
     "babel-eslint": "^7.1.1",
     "eslint": "3.11.1",
     "eslint-config-airbnb-base": "^10.0.1",
-    "eslint-plugin-import": "^2.2.0",
-    "source-map-support": "^0.4.6"
+    "eslint-plugin-import": "^2.2.0"
   },
   "dependencies": {
     "apex.js": "^2.0.0",

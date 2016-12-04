@@ -1,4 +1,3 @@
-import 'source-map-support/register';
 import λ from 'apex.js';
 import phantom from 'phantom';
 
