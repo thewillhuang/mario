@@ -6,7 +6,7 @@
   "handler": "dist.default",
   "memory": 128,
   "hooks": {
-    "build": "rm -fr node_modules; $HOME/.yarn/bin/yarn install; yarn; ../../node_modules/.bin/webpack --config ../../webpack.config.js;",
+    "build": "rm -fr node_modules; $HOME/.yarn/bin/yarn install ; yarn ; ../../node_modules/.bin/webpack --config ../../webpack.config.js;",
     "clean": "rm -fr dist"
   }
 }

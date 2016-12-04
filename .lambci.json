@@ -1,3 +1,3 @@
 {
-  "cmd": "if [ ! -d ~/.yarn ]; then curl -o- -L https://yarnpkg.com/install.sh | bash; fi; $HOME/.yarn/bin/yarn install --prod; if [ ! -d ~/apex ]; then curl -sL https://github.com/apex/apex/releases/download/v0.10.3/apex_linux_amd64 -o ~/apex; chmod +x ~/apex; fi; rm -fr apex_linux_amd64; ~/apex deploy"
+  "cmd": "if [ ! -d ~/.yarn ]; then curl -o- -L https://yarnpkg.com/install.sh | bash; fi; $HOME/.yarn/bin/yarn install ; if [ ! -d ~/apex ]; then curl -sL https://github.com/apex/apex/releases/download/v0.10.3/apex_linux_amd64 -o ~/apex; chmod +x ~/apex; fi; rm -fr apex_linux_amd64; ~/apex deploy"
 }
