@@ -3,7 +3,8 @@ import phantom from 'phantom';
 
 export default λ(async (e) => {
   console.log('e', e);
-  console.log('phantom', phantom);
-  return await phantom
-    .create(['--ignore-ssl-errors=yes', '--load-images=no']);
+  return phantom
+  // console.log('phantom', phantom);
+  // return await phantom
+  //   .create(['--ignore-ssl-errors=yes', '--load-images=no']);
 });
