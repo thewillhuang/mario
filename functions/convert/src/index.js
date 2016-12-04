@@ -37,9 +37,9 @@ export default λ(async ({ filename, html, css }) => {
     await instance.exit();
   }
 
-  const file = createReadStream(filename);
-  const stat = statSync(filename);
+  const file = createReadStream(`./${filename}`);
+  const stat = statSync(`./${filename}`);
   console.log('fileSize', stat.size);
-  unlinkSync(filename);
+  unlinkSync(`./${filename}`);
   return file;
 });
