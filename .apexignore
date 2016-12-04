@@ -1,9 +1,3 @@
 yarn.lock
-package.json
-node_modules/.cache/**
 .yarn-integrity
-test
-__test__
-tests
-**.md
 yarn-error.log
