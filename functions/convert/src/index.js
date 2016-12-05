@@ -79,7 +79,7 @@ export default λ(async ({
     unlinkSync(filePath);
 
     // return for user download link
-    return `s3.amazonaws.com${Bucket}/${fileName}`;
+    return `https://s3.amazonaws.com/${Bucket}/${fileName}`;
   } catch (e) {
     return e;
   } finally {
