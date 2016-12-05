@@ -65,6 +65,8 @@ export default λ(async ({
 
     console.log('filePath', filePath);
     console.log('Body', Body);
+    console.log('lookup', lookup);
+    console.log('contentDisposition func', contentDisposition);
 
     const ContentDisposition = contentDisposition(filePath);
     const ContentType = lookup(filePath);
