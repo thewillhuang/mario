@@ -31,8 +31,8 @@ export default λ(async ({
     height: 816,
   },
 }) => {
-  const Key = uuid().split('-').join('');
-  const fileName = `${Key}-${name}`;
+  const key = uuid().split('-').join('');
+  const fileName = `${key}-${name}`;
   const filePath = `/tmp/${fileName}`;
 
   // setup phantom
@@ -75,7 +75,7 @@ export default λ(async ({
 
     const params = {
       Bucket,
-      Key,
+      Key: fileName,
       Body,
       ACL: 'public-read',
       ContentEncoding: 'application/pdf',
