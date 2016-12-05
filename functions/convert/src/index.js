@@ -98,7 +98,7 @@ export default λ(async ({
     unlinkSync(filePath);
 
     // return for user content download link
-    return Location;
+    return { url: Location };
   } catch (e) {
     // kill phantom js process
     console.log('error', e);
