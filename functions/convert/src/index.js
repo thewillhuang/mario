@@ -40,7 +40,7 @@ export default λ(async ({ filename, html, css }) => {
   console.log('cwd', process.cwd());
   console.log('dir', readdirSync(process.cwd()));
   console.log('dist folder', readdirSync('dist/'));
-  console.log('permission', accessSync(filename, fs.F_OK));
+  console.log('permission', accessSync(filename, F_OK));
   const file = createReadStream(filename);
   const stat = statSync(filename);
   console.log('fileSize', stat.size);
