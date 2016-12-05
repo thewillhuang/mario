@@ -1,5 +1,5 @@
 import λ from 'apex.js';
-import { S3 } from 'aws-sdk';
+import AWS, { S3 } from 'aws-sdk';
 import phantom from 'phantom';
 import { lookup } from 'mime';
 import { v4 as uuid } from 'uuid';
@@ -86,9 +86,9 @@ export default λ(async ({
 
     console.log('params', params);
 
-    console.log('ManagedUpload', s3.managedUpload);
+    console.log('ManagedUpload', AWS.S3.managedUpload);
 
-    const upload = new s3.ManagedUpload(params).promise();
+    const upload = new AWS.S3.ManagedUpload(params).promise();
 
     // then upload to s3
     const result = await upload;
