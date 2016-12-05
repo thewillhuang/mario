@@ -79,7 +79,9 @@ export default λ(async ({
     const upload = new s3.ManagedUpload(params).promise();
 
     // then upload to s3
-    const { Location } = await upload;
+    const result = await upload;
+
+    console.log(result);
 
     // kill phantom js process
     await instance.exit();
@@ -88,7 +90,7 @@ export default λ(async ({
     unlinkSync(filePath);
 
     // return for user content download link
-    return Location;
+    return result.Location;
   } catch (e) {
     // kill phantom js process
     await instance.exit();
