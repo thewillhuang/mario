@@ -36,6 +36,7 @@ export default λ(async ({
   const Key = uuid().split('-').join();
   const fileName = `${Key}-${name}`;
   const filePath = `/tmp/${fileName}`;
+  console.log(phantom);
 
   // setup phantom
   const instance = await phantom.create();
