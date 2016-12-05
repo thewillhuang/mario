@@ -1,14 +1,12 @@
 import λ from 'apex.js';
 import phantom from 'phantom';
-import { createReadStream, statSync, unlinkSync, readdirSync, accessSync, F_OK } from 'fs';
+import { readFileSync, unlinkSync } from 'fs';
 import template from './lib/template';
 
 Promise.coroutine.addYieldHandler(value => Promise.resolve(value));
 
 export default λ(async ({ filename, html, css }) => {
-  console.log('html', html);
-  console.log('css', css);
-  console.log('filename', filename);
+  const file = `/tmp/${filename}`;
   const instance = await phantom.create();
   const page = await instance.createPage();
 
@@ -24,28 +22,16 @@ export default λ(async ({ filename, html, css }) => {
 
   page.property('content', template({ html, css }));
 
-  const content = await page.property('content');
-
   try {
-    console.log('rendering', content);
-    await page.render(filename);
+    await page.render(file);
   } catch (e) {
-    console.log('error in render', e);
-    console.log('error rendering', content);
     return e;
   } finally {
     await instance.exit();
   }
 
-  console.log('cwd', process.cwd());
-  console.log('dir', readdirSync(process.cwd()));
-  console.log('dist folder', readdirSync('dist/'));
-  console.log('..', readdirSync('..'));
-  console.log('../..', readdirSync('../..'));
-  console.log('permission', accessSync(filename, F_OK));
-  const file = createReadStream(filename);
-  const stat = statSync(filename);
-  console.log('fileSize', stat.size);
-  unlinkSync(filename);
-  return file;
+  const bitmap = readFileSync(file);
+  unlinkSync(file);
+  // convert binary data to base64 encoded string
+  return new Buffer(bitmap).toString('base64');
 });
