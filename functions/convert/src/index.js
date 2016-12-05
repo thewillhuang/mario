@@ -73,6 +73,8 @@ export default λ(async ({
 
     console.log('params', params);
 
+    console.log('ManagedUpload', s3.managedUpload);
+
     const upload = new s3.ManagedUpload(params).promise();
 
     // then upload to s3
@@ -90,6 +92,7 @@ export default λ(async ({
     return result.Location;
   } catch (e) {
     // kill phantom js process
+    console.log('error', e);
     await instance.exit();
     return e;
   }
