@@ -68,11 +68,12 @@ export default λ(async ({
     console.log('lookup', lookup);
     console.log('contentDisposition func', contentDisposition);
 
-    const ContentDisposition = contentDisposition(filePath);
-    const ContentType = lookup(filePath);
 
-    console.log('ContentDisposition', ContentDisposition);
+    const ContentType = lookup(filePath);
     console.log('ContentType', ContentType);
+
+    const ContentDisposition = contentDisposition(filePath);
+    console.log('ContentDisposition', ContentDisposition);
 
     const params = {
       Bucket,
