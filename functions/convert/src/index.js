@@ -9,6 +9,7 @@ export default λ(async ({
   filename,
   html,
   css,
+  cssUrl = '',
   paperSize: {
     format,
     orientation,
@@ -38,7 +39,7 @@ export default λ(async ({
     height,
   });
 
-  page.property('content', template({ html, css }));
+  page.property('content', template({ html, css, cssUrl }));
 
   try {
     await page.render(file);
