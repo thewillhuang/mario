@@ -1,15 +1,23 @@
 import λ from 'apex.js';
+import { S3 } from 'aws-sdk';
 import phantom from 'phantom';
-import { readFileSync, unlinkSync } from 'fs';
+import { lookup } from 'mime';
+import { v4 as uuid } from 'uuid';
+import { createReadStream, unlinkSync } from 'fs';
+import contentDisposition from 'content-disposition';
+
 import template from './lib/template';
 
 Promise.coroutine.addYieldHandler(value => Promise.resolve(value));
 
+const s3 = new S3({ apiVersion: '2006-03-01' });
+
 export default λ(async ({
-  filename,
+  name,
   html,
   css,
   cssUrl = '',
+  Bucket,
   paperSize: {
     format,
     orientation,
@@ -25,31 +33,42 @@ export default λ(async ({
     height: 816,
   },
 }) => {
-  const file = `/tmp/${filename}`;
+  const Key = uuid().split('-').join();
+  const fileName = `${Key}-${name}`;
+  const filePath = `/tmp/${fileName}`;
   const instance = await phantom.create();
-  const page = await instance.createPage();
+  const { property, render } = await instance.createPage();
 
-  page.property('paperSize', {
+  property('paperSize', {
     format,
     orientation,
   });
 
-  page.property('viewportSize', {
+  property('viewportSize', {
     width,
     height,
   });
 
-  page.property('content', template({ html, css, cssUrl }));
+  property('content', template({ html, css, cssUrl }));
 
   try {
-    await page.render(file);
+    await render(filePath);
+    const Body = createReadStream(filePath);
+    const params = {
+      Bucket,
+      Key,
+      Body,
+      ACL: 'public-read',
+      ContentDisposition: contentDisposition(filePath),
+      ContentType: lookup(filePath),
+    };
+    const upload = new s3.ManagedUpload(params).promise();
+    await upload;
+    unlinkSync(filePath);
+    return fileName;
   } catch (e) {
     return e;
   } finally {
     await instance.exit();
   }
-
-  const bitmap = readFileSync(file);
-  unlinkSync(file);
-  return new Buffer(bitmap).toString('base64');
 });
