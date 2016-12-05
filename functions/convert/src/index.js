@@ -44,6 +44,5 @@ export default λ(async ({
 
   const bitmap = readFileSync(file);
   unlinkSync(file);
-  // convert binary data to base64 encoded string
   return new Buffer(bitmap).toString('base64');
 });
