@@ -106,7 +106,7 @@ export default λ(async ({
     unlinkSync(filePath);
 
     // return for user content download link
-    return `${result.Location}.pdf`;
+    return result.Location;
   } catch (e) {
     // kill phantom js process
     console.log('error', e);
