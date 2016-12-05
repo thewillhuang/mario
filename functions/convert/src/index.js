@@ -63,13 +63,14 @@ export default λ(async ({
     // setup s3 uploader
     const Body = createReadStream(filePath);
 
-    console.log(filePath);
-    console.log(Body);
+    console.log('filePath', filePath);
+    console.log('Body', Body);
+
     const ContentDisposition = contentDisposition(filePath);
     const ContentType = lookup(filePath);
 
-    console.log(ContentDisposition);
-    console.log(ContentType);
+    console.log('ContentDisposition', ContentDisposition);
+    console.log('ContentType', ContentType);
 
     const params = {
       Bucket,
