@@ -99,7 +99,7 @@ export default λ(async ({
     // kill phantom js process
     await instance.exit();
 
-    // clean up cache
+    // delete the generated pdf
     unlinkSync(filePath);
 
     // return for user content download link
