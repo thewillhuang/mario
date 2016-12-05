@@ -5,7 +5,7 @@
   "runtime": "nodejs4.3",
   "handler": "dist.default",
   "memory": 1024,
-  "timeout": 15,
+  "timeout": 60,
   "hooks": {
     "build": "rm -fr node_modules; $HOME/.yarn/bin/yarn install ; yarn ; ../../node_modules/.bin/webpack --config ../../webpack.config.js;",
     "clean": "rm -fr dist"
