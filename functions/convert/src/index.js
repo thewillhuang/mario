@@ -73,6 +73,9 @@ export default λ(async ({
       ContentDisposition: contentDisposition(filePath),
       ContentType: lookup(filePath),
     };
+
+    console.log('params', params);
+
     const upload = new s3.ManagedUpload(params).promise();
 
     // then upload to s3
