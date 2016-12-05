@@ -2,7 +2,7 @@ import λ from 'apex.js';
 import { S3 } from 'aws-sdk';
 import phantom from 'phantom';
 import { lookup } from 'mime';
-import { v4 as id } from 'uuid';
+import { v4 as uuid } from 'uuid';
 import { createReadStream, unlinkSync } from 'fs';
 import contentDisposition from 'content-disposition';
 
@@ -33,7 +33,7 @@ export default λ(async ({
     height: 816,
   },
 }) => {
-  const Key = id().split('-').join();
+  const Key = uuid().split('-').join();
   const fileName = `${Key}-${name}`;
   const filePath = `/tmp/${fileName}`;
 
