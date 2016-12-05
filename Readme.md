@@ -1,3 +1,5 @@
+An Apex Lambda function built using https://github.com/lambci/lambci, running native phantomjs taking html css and returns base64 strings from generated files.
+
 Install NPM dependencies:
 
 ```
