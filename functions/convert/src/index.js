@@ -83,7 +83,7 @@ export default λ(async ({
   } catch (e) {
     return e;
   } finally {
-    // exit the instance
+    // kill phantom js process
     await instance.exit();
   }
 });
