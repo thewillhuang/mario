@@ -20,5 +20,5 @@ $ echo '{ "html": "<p>hello world</p>", "css": "color: 'red';", "filename": "out
 
 api gateway (throttled)
 ```
-$ curl -H "Content-Type: application/json" -X POST -d '{ "password": "hello" }' https://93fw7d2uui.execute-api.us-east-1.amazonaws.com/prod
+$ curl -H "Content-Type: application/json" -X POST -d '{ "html": "<p>hello world</p>", "css": "color: 'red';", "filename": "output.pdf" }' https://8i6ymbqx15.execute-api.us-east-1.amazonaws.com/prod
 ```
