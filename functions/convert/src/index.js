@@ -38,31 +38,30 @@ export default λ(async ({
   // setup phantom
   const instance = await phantom.create();
   const page = await instance.createPage();
+  const { property, render } = page;
 
   // sets paper size
-  page.property('paperSize', {
+  property('paperSize', {
     format,
     orientation,
   });
 
   // sets viewport
-  page.property('viewportSize', {
+  property('viewportSize', {
     width,
     height,
   });
 
   // sets content for phantom to render
-  page.property('content', template({ html, css, cssUrl }));
+  property('content', template({ html, css, cssUrl }));
 
   try {
     // render the pdf to file path
-    await page.render(filePath);
+    await render(filePath);
 
     // setup s3 uploader
     const Body = createReadStream(filePath);
 
-    console.log('filePath', filePath);
-    console.log('Body', Body);
     // console.log('lookup', lookup);
     // console.log('contentDisposition func', contentDisposition);
 
@@ -83,10 +82,6 @@ export default λ(async ({
       // ContentType,
     };
 
-    console.log('params', params);
-
-    console.log('ManagedUpload', AWS.S3.ManagedUpload);
-
     const upload = new AWS.S3.ManagedUpload({ params });
     const uploadPromise = new Promise((resolve, reject) => {
       upload.send((err, data) => {
@@ -95,9 +90,7 @@ export default λ(async ({
       });
     });
     // then upload to s3
-    const result = await uploadPromise;
-
-    console.log('upload result', result);
+    const { Location } = await uploadPromise;
 
     // kill phantom js process
     await instance.exit();
@@ -106,7 +99,7 @@ export default λ(async ({
     unlinkSync(filePath);
 
     // return for user content download link
-    return result.Location;
+    return Location;
   } catch (e) {
     // kill phantom js process
     console.log('error', e);
