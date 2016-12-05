@@ -10,25 +10,31 @@ import template from './lib/template';
 
 Promise.coroutine.addYieldHandler(value => Promise.resolve(value));
 
+const paperSizeDefaults = {
+  format: 'A4',
+  orientation: 'landscape',
+};
+
+// const clipRectDefaults = {
+//   top, left, width, height,
+// };
+//
+// const viewportSizeDefaults = {
+//   width,
+//   height,
+// };
+
 export default λ(async ({
   name,
   html,
   css,
   cssUrl = '',
   Bucket = 'mario-converter',
-  paperSize: {
-    format,
-    orientation,
-  } = {
-    format: 'A4',
-    orientation: 'landscape',
-  },
-  viewportSize: {
-    width,
-    height,
-  } = {
-    width: 1056,
-    height: 816,
+  pageConfig: {
+    clipRect,
+    paperSize = paperSizeDefaults,
+    zoomFactor = 1,
+    viewportSize,
   },
 }) => {
   const key = uuid().split('-').join('');
@@ -40,16 +46,15 @@ export default λ(async ({
   const page = await instance.createPage();
 
   // sets paper size
-  page.property('paperSize', {
-    format,
-    orientation,
-  });
+  page.property('paperSize', paperSize);
+
+  page.property('zoomFactor', zoomFactor);
+
+  // sets clipRect
+  if (clipRect) { page.property('clipRect', clipRect); }
 
   // sets viewport
-  page.property('viewportSize', {
-    width,
-    height,
-  });
+  if (viewportSize) { page.property('viewportSize', viewportSize); }
 
   // sets content for phantom to render
   page.property('content', template({ html, css, cssUrl }));
