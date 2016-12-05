@@ -33,10 +33,11 @@ export default λ(async ({
     height: 816,
   },
 }) => {
-  const Key = uuid().split('-').join();
+  const Key = uuid().split('-').join('');
   const fileName = `${Key}-${name}`;
   const filePath = `/tmp/${fileName}`;
 
+  console.log(Key);
   console.log('fileName', fileName);
   console.log('filePath', filePath);
   console.log('phantom', phantom);
