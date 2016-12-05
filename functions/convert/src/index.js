@@ -37,7 +37,7 @@ export default λ(async ({
   const fileName = `${Key}-${name}`;
   const filePath = `/tmp/${fileName}`;
 
-  // phantom setup
+  // setup phantom
   const instance = await phantom.create();
   const { property, render } = await instance.createPage();
 
@@ -57,7 +57,7 @@ export default λ(async ({
   property('content', template({ html, css, cssUrl }));
 
   try {
-    // render the pdf to the file path
+    // render the pdf to file path
     await render(filePath);
 
     // setup s3 uploader
@@ -73,13 +73,13 @@ export default λ(async ({
     const upload = new s3.ManagedUpload(params).promise();
 
     // then upload to s3
-    await upload;
+    const { Location } = await upload;
 
     // clean up cache
     unlinkSync(filePath);
 
-    // return for user download link
-    return `https://s3.amazonaws.com/${Bucket}/${fileName}`;
+    // return for user content download link
+    return Location;
   } catch (e) {
     return e;
   } finally {
