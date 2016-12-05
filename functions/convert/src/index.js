@@ -37,15 +37,13 @@ export default λ(async ({
   const fileName = `${Key}-${name}`;
   const filePath = `/tmp/${fileName}`;
 
-  console.log(Key);
-  console.log('fileName', fileName);
-  console.log('filePath', filePath);
-  console.log('phantom', phantom);
-  console.log('S3', S3);
-
   // setup phantom
   const instance = await phantom.create();
   const page = await instance.createPage();
+  const { property, render } = page;
+
+  console.log('property', property);
+  console.log('render', render);
 
   // sets paper size
   page.property('paperSize', {
@@ -81,7 +79,7 @@ export default λ(async ({
     // then upload to s3
     const result = await upload;
 
-    console.log(result);
+    console.log('upload result', result);
 
     // kill phantom js process
     await instance.exit();
