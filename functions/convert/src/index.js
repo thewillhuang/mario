@@ -39,29 +39,26 @@ export default λ(async ({
 
   // setup phantom
   const instance = await phantom.create();
-  const { property, render } = await instance.createPage();
-
-  console.log('property', property);
-  console.log('render', render);
+  const page = await instance.createPage();
 
   // sets paper size
-  property('paperSize', {
+  page.property('paperSize', {
     format,
     orientation,
   });
 
   // sets viewport
-  property('viewportSize', {
+  page.property('viewportSize', {
     width,
     height,
   });
 
   // sets content for phantom to render
-  property('content', template({ html, css, cssUrl }));
+  page.property('content', template({ html, css, cssUrl }));
 
   try {
     // render the pdf to file path
-    await render(filePath);
+    await page.render(filePath);
 
     // setup s3 uploader
     const Body = createReadStream(filePath);
