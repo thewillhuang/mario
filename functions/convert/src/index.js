@@ -97,7 +97,7 @@ export default λ(async ({
       });
     });
     // then upload to s3
-    const result = await uploadPromise();
+    const result = await uploadPromise;
 
     console.log('upload result', result);
 
