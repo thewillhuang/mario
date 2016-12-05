@@ -15,7 +15,7 @@ Try it out:
 
 native modules on lambda
 ```
-$ echo '{ "password": "Hello" }' | apex invoke graphql
+$ echo '{ "html": "<p>hello world</p>", "css": "color: 'red';", "filename": "output.pdf" }' | apex invoke convert
 ```
 
 api gateway (throttled)
