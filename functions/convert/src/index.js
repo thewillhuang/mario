@@ -89,10 +89,15 @@ export default λ(async ({
 
     console.log('ManagedUpload', AWS.S3.ManagedUpload);
 
-    const upload = new AWS.S3.ManagedUpload({ params }).promise();
-
+    const upload = new AWS.S3.ManagedUpload({ params });
+    const uploadPromise = new Promise((resolve, reject) => {
+      upload.send((err, data) => {
+        if (err) { return reject(err); }
+        return resolve(data);
+      });
+    });
     // then upload to s3
-    const result = await upload;
+    const result = await uploadPromise();
 
     console.log('upload result', result);
 
