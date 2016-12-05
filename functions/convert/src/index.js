@@ -65,14 +65,19 @@ export default λ(async ({
 
     console.log(filePath);
     console.log(Body);
+    const ContentDisposition = contentDisposition(filePath);
+    const ContentType = lookup(filePath);
+
+    console.log(ContentDisposition);
+    console.log(ContentType);
 
     const params = {
       Bucket,
       Key,
       Body,
       ACL: 'public-read',
-      ContentDisposition: contentDisposition(filePath),
-      ContentType: lookup(filePath),
+      ContentDisposition,
+      ContentType,
     };
 
     console.log('params', params);
