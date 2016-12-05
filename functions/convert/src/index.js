@@ -5,19 +5,31 @@ import template from './lib/template';
 
 Promise.coroutine.addYieldHandler(value => Promise.resolve(value));
 
-export default λ(async ({ filename, html, css }) => {
+export default λ(async ({
+  filename,
+  html,
+  css,
+  paperSize: {
+    format = 'A4',
+    orientation = 'landscape',
+  },
+  viewportSize: {
+    width = 1056,
+    height = 816,
+  },
+}) => {
   const file = `/tmp/${filename}`;
   const instance = await phantom.create();
   const page = await instance.createPage();
 
   page.property('paperSize', {
-    format: 'A4',
-    orientation: 'landscape',
+    format,
+    orientation,
   });
 
   page.property('viewportSize', {
-    width: 1056,
-    height: 816,
+    width,
+    height,
   });
 
   page.property('content', template({ html, css }));
