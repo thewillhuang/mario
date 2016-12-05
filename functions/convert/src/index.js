@@ -1,5 +1,5 @@
 import λ from 'apex.js';
-import AWS, { S3 } from 'aws-sdk';
+import AWS from 'aws-sdk';
 import phantom from 'phantom';
 import { lookup } from 'mime';
 import { v4 as uuid } from 'uuid';
@@ -9,8 +9,6 @@ import contentDisposition from 'content-disposition';
 import template from './lib/template';
 
 Promise.coroutine.addYieldHandler(value => Promise.resolve(value));
-
-const s3 = new S3();
 
 export default λ(async ({
   name,
@@ -108,7 +106,7 @@ export default λ(async ({
     unlinkSync(filePath);
 
     // return for user content download link
-    return result.Location;
+    return `${result.Location}.pdf`;
   } catch (e) {
     // kill phantom js process
     console.log('error', e);
