@@ -17,7 +17,7 @@ export default λ(async ({
   html,
   css,
   cssUrl = '',
-  Bucket,
+  Bucket = 'mario-converter',
   paperSize: {
     format,
     orientation,
@@ -75,15 +75,17 @@ export default λ(async ({
     // then upload to s3
     const { Location } = await upload;
 
+    // kill phantom js process
+    await instance.exit();
+
     // clean up cache
     unlinkSync(filePath);
 
     // return for user content download link
     return Location;
   } catch (e) {
-    return e;
-  } finally {
     // kill phantom js process
     await instance.exit();
+    return e;
   }
 });
