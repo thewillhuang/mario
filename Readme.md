@@ -1,4 +1,4 @@
-An Apex Lambda function built using https://github.com/lambci/lambci, running native phantomjs taking html css and returns base64 strings from generated files.
+An Apex Lambda function built using https://github.com/lambci/lambci, running native phantom js taking html css and returns an AWS s3 url link for the user to download the files.
 
 Install NPM dependencies:
 
