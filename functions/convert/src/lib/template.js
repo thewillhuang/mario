@@ -1,4 +1,4 @@
-const constructLinkTag = cssUrl =>
+const generateLinkTag = cssUrl =>
   (cssUrl ? `<link href="${cssUrl}" rel="stylesheet">` : '');
 
 export default ({ html, css, cssUrl }) =>
@@ -6,7 +6,7 @@ export default ({ html, css, cssUrl }) =>
   <html lang="en">
   <head>
     <meta charset="UTF-8">
-    ${constructLinkTag(cssUrl)}
+    ${generateLinkTag(cssUrl)}
     <style>${css}</style>
   </head>
   <body>

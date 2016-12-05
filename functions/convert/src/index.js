@@ -2,7 +2,7 @@ import λ from 'apex.js';
 import { S3 } from 'aws-sdk';
 import phantom from 'phantom';
 import { lookup } from 'mime';
-import { v4 as uuid } from 'uuid';
+import { v4 as id } from 'uuid';
 import { createReadStream, unlinkSync } from 'fs';
 import contentDisposition from 'content-disposition';
 
@@ -33,25 +33,31 @@ export default λ(async ({
     height: 816,
   },
 }) => {
-  const Key = uuid().split('-').join();
+  const Key = id().split('-').join();
   const fileName = `${Key}-${name}`;
   const filePath = `/tmp/${fileName}`;
+
+  // phantom setup
   const instance = await phantom.create();
   const { property, render } = await instance.createPage();
 
+  // sets paper size
   property('paperSize', {
     format,
     orientation,
   });
 
+  // sets viewport
   property('viewportSize', {
     width,
     height,
   });
 
+  // sets content for phantom to render
   property('content', template({ html, css, cssUrl }));
 
   try {
+    // render the pdf to the file path
     await render(filePath);
     const Body = createReadStream(filePath);
     const params = {
@@ -63,12 +69,19 @@ export default λ(async ({
       ContentType: lookup(filePath),
     };
     const upload = new s3.ManagedUpload(params).promise();
+
+    // upload to s3
     await upload;
+
+    // clean up cache
     unlinkSync(filePath);
-    return fileName;
+
+    // return for user download link
+    return `s3.amazonaws.com${Bucket}/${fileName}`;
   } catch (e) {
     return e;
   } finally {
+    // exit the instance
     await instance.exit();
   }
 });
