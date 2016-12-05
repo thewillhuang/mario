@@ -36,30 +36,34 @@ export default λ(async ({
   const Key = uuid().split('-').join();
   const fileName = `${Key}-${name}`;
   const filePath = `/tmp/${fileName}`;
-  console.log(phantom);
+
+  console.log('fileName', fileName);
+  console.log('filePath', filePath);
+  console.log('phantom', phantom);
+  console.log('S3', S3);
 
   // setup phantom
   const instance = await phantom.create();
-  const { property, render } = await instance.createPage();
+  const page = await instance.createPage();
 
   // sets paper size
-  property('paperSize', {
+  page.property('paperSize', {
     format,
     orientation,
   });
 
   // sets viewport
-  property('viewportSize', {
+  page.property('viewportSize', {
     width,
     height,
   });
 
   // sets content for phantom to render
-  property('content', template({ html, css, cssUrl }));
+  page.property('content', template({ html, css, cssUrl }));
 
   try {
     // render the pdf to file path
-    await render(filePath);
+    await page.render(filePath);
 
     // setup s3 uploader
     const Body = createReadStream(filePath);
