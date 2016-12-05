@@ -3,7 +3,7 @@ import AWS, { S3 } from 'aws-sdk';
 import phantom from 'phantom';
 import { lookup } from 'mime';
 import { v4 as uuid } from 'uuid';
-import { readFileSync, unlinkSync } from 'fs';
+import { createReadStream, unlinkSync } from 'fs';
 import contentDisposition from 'content-disposition';
 
 import template from './lib/template';
@@ -61,7 +61,7 @@ export default λ(async ({
     await page.render(filePath);
 
     // setup s3 uploader
-    const Body = readFileSync(filePath);
+    const Body = createReadStream(filePath);
 
     console.log('filePath', filePath);
     console.log('Body', Body);
@@ -89,7 +89,7 @@ export default λ(async ({
 
     console.log('ManagedUpload', AWS.S3.ManagedUpload);
 
-    const upload = new AWS.S3.ManagedUpload(params).promise();
+    const upload = new AWS.S3.ManagedUpload({ params }).promise();
 
     // then upload to s3
     const result = await upload;
