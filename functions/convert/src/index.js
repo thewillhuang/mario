@@ -59,6 +59,8 @@ export default λ(async ({
   try {
     // render the pdf to the file path
     await render(filePath);
+
+    // setup s3 uploader
     const Body = createReadStream(filePath);
     const params = {
       Bucket,
@@ -70,7 +72,7 @@ export default λ(async ({
     };
     const upload = new s3.ManagedUpload(params).promise();
 
-    // upload to s3
+    // then upload to s3
     await upload;
 
     // clean up cache
