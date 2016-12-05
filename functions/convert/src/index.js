@@ -10,7 +10,7 @@ import template from './lib/template';
 
 Promise.coroutine.addYieldHandler(value => Promise.resolve(value));
 
-const s3 = new S3({ apiVersion: '2006-03-01' });
+const s3 = new S3();
 
 export default λ(async ({
   name,
@@ -80,13 +80,15 @@ export default λ(async ({
       Key,
       Body,
       ACL: 'public-read',
+      ContentEncoding: 'application/pdf',
       // ContentDisposition,
       // ContentType,
     };
 
     console.log('params', params);
 
-    console.log('ManagedUpload', AWS.S3.managedUpload);
+    console.log('ManagedUpload', AWS.S3.ManagedUpload);
+    console.log('ManagedUpload 2', s3.ManagedUpload);
 
     const upload = new AWS.S3.ManagedUpload(params).promise();
 
