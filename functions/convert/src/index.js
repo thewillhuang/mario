@@ -10,12 +10,18 @@ export default λ(async ({
   html,
   css,
   paperSize: {
-    format = 'A4',
-    orientation = 'landscape',
+    format,
+    orientation,
+  } = {
+    format: 'A4',
+    orientation: 'landscape',
   },
   viewportSize: {
-    width = 1056,
-    height = 816,
+    width,
+    height,
+  } = {
+    width: 1056,
+    height: 816,
   },
 }) => {
   const file = `/tmp/${filename}`;
