@@ -1,7 +1,7 @@
 import λ from 'apex.js';
+import mime from 'mime';
 import AWS from 'aws-sdk';
 import phantom from 'phantom';
-import mime from 'mime';
 import { v4 as uuid } from 'uuid';
 import { createReadStream, unlinkSync } from 'fs';
 import contentDisposition from 'content-disposition';
