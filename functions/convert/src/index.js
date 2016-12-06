@@ -1,7 +1,7 @@
 import λ from 'apex.js';
 import AWS from 'aws-sdk';
 import phantom from 'phantom';
-import mime, { lookup } from 'mime';
+import mime from 'mime';
 import { v4 as uuid } from 'uuid';
 import { createReadStream, unlinkSync } from 'fs';
 import contentDisposition from 'content-disposition';
@@ -9,20 +9,6 @@ import contentDisposition from 'content-disposition';
 import template from './lib/template';
 
 Promise.coroutine.addYieldHandler(value => Promise.resolve(value));
-
-// const paperSizeDefaults = {
-//   format: 'A4',
-//   orientation: 'landscape',
-// };
-
-// const clipRectDefaults = {
-//   top, left, width, height,
-// };
-//
-// const viewportSizeDefaults = {
-//   width,
-//   height,
-// };
 
 export default λ(async ({
   name,
@@ -43,18 +29,6 @@ export default λ(async ({
   // sets page property
   Object.keys(pageConfig).forEach(config => page.property(config, pageConfig[config]));
 
-  // sets paper size
-  // page.property('paperSize', paperSize);
-  //
-  // // sets zoom factor
-  // page.property('zoomFactor', zoomFactor);
-  //
-  // // sets clipRect
-  // if (clipRect) { page.property('clipRect', clipRect); }
-  //
-  // // sets viewport
-  // if (viewportSize) { page.property('viewportSize', viewportSize); }
-
   // sets content for phantom to render
   page.property('content', template({ html, css, cssUrl }));
 
@@ -65,26 +39,24 @@ export default λ(async ({
     // setup s3 uploader
     const Body = createReadStream(filePath);
 
-    const ContentType = lookup(filePath);
-
-    const ContentDisposition = contentDisposition(filePath);
-
     const params = {
       Bucket,
       Key: fileName,
       Body,
       ACL: 'public-read',
-      ContentDisposition,
-      ContentType,
+      ContentDisposition: contentDisposition(filePath),
+      ContentType: mime.lookup(filePath),
     };
 
     const upload = new AWS.S3.ManagedUpload({ params });
+
     const uploadPromise = new Promise((resolve, reject) => {
       upload.send((err, data) => {
         if (err) { return reject(err); }
         return resolve(data);
       });
     });
+
     // then upload to s3
     const { Location } = await uploadPromise;
 
