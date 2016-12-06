@@ -30,12 +30,7 @@ export default λ(async ({
   css,
   cssUrl = '',
   Bucket = 'mario-converter',
-  pageConfig: {
-    clipRect,
-    paperSize = paperSizeDefaults,
-    zoomFactor = 1,
-    viewportSize,
-  },
+  pageConfig,
 }) => {
   const key = uuid().split('-').join('');
   const fileName = `${key}-${name}`;
@@ -45,17 +40,20 @@ export default λ(async ({
   const instance = await phantom.create();
   const page = await instance.createPage();
 
+  // sets page property
+  Object.keys(pageConfig).forEach(config => page.property(config, pageConfig[config]));
+
   // sets paper size
-  page.property('paperSize', paperSize);
-
-  // sets zoom factor
-  page.property('zoomFactor', zoomFactor);
-
-  // sets clipRect
-  if (clipRect) { page.property('clipRect', clipRect); }
-
-  // sets viewport
-  if (viewportSize) { page.property('viewportSize', viewportSize); }
+  // page.property('paperSize', paperSize);
+  //
+  // // sets zoom factor
+  // page.property('zoomFactor', zoomFactor);
+  //
+  // // sets clipRect
+  // if (clipRect) { page.property('clipRect', clipRect); }
+  //
+  // // sets viewport
+  // if (viewportSize) { page.property('viewportSize', viewportSize); }
 
   // sets content for phantom to render
   page.property('content', template({ html, css, cssUrl }));
