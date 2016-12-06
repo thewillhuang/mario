@@ -19,6 +19,7 @@ export default ({ html, css, cssUrls, jsUrls }) =>
   <html lang="en">
   <head>
     <meta charset="UTF-8">
+    <style>body { transform-origin: 0 0; -webkit-transform-origin: 0 0; transform: scale(0.654545); -webkit-transform: scale(0.654545); }</style>
     ${generateLinkTag(cssUrls)}
     <style>${css}</style>
   </head>
