@@ -65,17 +65,16 @@ export default λ(async ({
     // setup s3 uploader
     const Body = createReadStream(filePath);
 
-    const ContentType = mime.lookup(filePath);
+    const ContentType = lookup(filePath);
 
     const ContentDisposition = contentDisposition(filePath);
-    console.log('ContentDisposition', ContentDisposition);
 
     const params = {
       Bucket,
       Key: fileName,
       Body,
       ACL: 'public-read',
-      // ContentDisposition,
+      ContentDisposition,
       ContentType,
     };
 
