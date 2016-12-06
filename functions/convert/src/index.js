@@ -54,8 +54,8 @@ export default λ(async ({
 
     const uploadPromise = new Promise((resolve, reject) => {
       upload.send((err, data) => {
-        if (err) { return reject(err); }
-        return resolve(data);
+        if (err) { reject(err); }
+        resolve(data);
       });
     });
 
