@@ -10,10 +10,10 @@ import template from './lib/template';
 
 Promise.coroutine.addYieldHandler(value => Promise.resolve(value));
 
-const paperSizeDefaults = {
-  format: 'A4',
-  orientation: 'landscape',
-};
+// const paperSizeDefaults = {
+//   format: 'A4',
+//   orientation: 'landscape',
+// };
 
 // const clipRectDefaults = {
 //   top, left, width, height,
@@ -66,10 +66,9 @@ export default λ(async ({
     const Body = createReadStream(filePath);
 
     const ContentType = mime.lookup(filePath);
-    console.log('ContentType', ContentType);
 
-    // const ContentDisposition = contentDisposition(filePath);
-    // console.log('ContentDisposition', ContentDisposition);
+    const ContentDisposition = contentDisposition(filePath);
+    console.log('ContentDisposition', ContentDisposition);
 
     const params = {
       Bucket,
@@ -77,7 +76,7 @@ export default λ(async ({
       Body,
       ACL: 'public-read',
       // ContentDisposition,
-      // ContentType,
+      ContentType,
     };
 
     const upload = new AWS.S3.ManagedUpload({ params });
