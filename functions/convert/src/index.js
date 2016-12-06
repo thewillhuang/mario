@@ -14,7 +14,8 @@ export default λ(async ({
   name,
   html,
   css,
-  cssUrl = '',
+  cssUrls = [],
+  jsUrls = [],
   Bucket = 'mario-converter',
   pageConfig,
 }) => {
@@ -30,7 +31,7 @@ export default λ(async ({
     Object.keys(pageConfig).forEach(config => page.property(config, pageConfig[config]));
 
     // sets content for phantom to render
-    page.property('content', template({ html, css, cssUrl }));
+    page.property('content', template({ html, css, cssUrls, jsUrls }));
 
     // render the pdf to file path
     await page.render(filePath);

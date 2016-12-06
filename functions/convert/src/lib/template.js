@@ -1,15 +1,29 @@
-const generateLinkTag = cssUrl =>
-  (cssUrl ? `<link href="${cssUrl}" rel="stylesheet">` : '');
+const generateLinkTag = (cssUrl) => {
+  let css = '';
+  cssUrl.forEach((url) => {
+    css += `<link href="${url}" rel="stylesheet">`;
+  });
+  return css;
+};
 
-export default ({ html, css, cssUrl }) =>
+const generateScriptTag = (jsUrl) => {
+  let js = '';
+  jsUrl.forEach((url) => {
+    js += `<script src="${url}"></script>`;
+  });
+  return js;
+};
+
+export default ({ html, css, cssUrls, jsUrls }) =>
   `<!DOCTYPE html>
   <html lang="en">
   <head>
     <meta charset="UTF-8">
-    ${generateLinkTag(cssUrl)}
+    ${generateLinkTag(cssUrls)}
     <style>${css}</style>
   </head>
   <body>
+    ${generateScriptTag(jsUrls)}
     ${html}
   </body>
   </html>
