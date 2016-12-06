@@ -1,7 +1,7 @@
 import λ from 'apex.js';
 import AWS from 'aws-sdk';
 import phantom from 'phantom';
-import { lookup } from 'mime';
+import mime, { lookup } from 'mime';
 import { v4 as uuid } from 'uuid';
 import { createReadStream, unlinkSync } from 'fs';
 import contentDisposition from 'content-disposition';
@@ -48,6 +48,7 @@ export default λ(async ({
   // sets paper size
   page.property('paperSize', paperSize);
 
+  // sets zoom factor
   page.property('zoomFactor', zoomFactor);
 
   // sets clipRect
@@ -66,12 +67,8 @@ export default λ(async ({
     // setup s3 uploader
     const Body = createReadStream(filePath);
 
-    // console.log('lookup', lookup);
-    // console.log('contentDisposition func', contentDisposition);
-
-
-    // const ContentType = lookup(filePath);
-    // console.log('ContentType', ContentType);
+    const ContentType = mime.lookup(filePath);
+    console.log('ContentType', ContentType);
 
     // const ContentDisposition = contentDisposition(filePath);
     // console.log('ContentDisposition', ContentDisposition);
@@ -81,7 +78,6 @@ export default λ(async ({
       Key: fileName,
       Body,
       ACL: 'public-read',
-      ContentEncoding: 'application/pdf',
       // ContentDisposition,
       // ContentType,
     };
