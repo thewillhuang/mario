@@ -25,16 +25,18 @@ export default λ(async ({
   // setup phantom
   const instance = await phantom.create();
   const page = await instance.createPage();
-
-  // sets page property
-  Object.keys(pageConfig).forEach(config => page.property(config, pageConfig[config]));
-
-  // sets content for phantom to render
-  page.property('content', template({ html, css, cssUrl }));
-
   try {
+    // sets page property
+    Object.keys(pageConfig).forEach(config => page.property(config, pageConfig[config]));
+
+    // sets content for phantom to render
+    page.property('content', template({ html, css, cssUrl }));
+
     // render the pdf to file path
     await page.render(filePath);
+
+    // kill phantom js process
+    await instance.exit();
 
     // setup s3 uploader
     const Body = createReadStream(filePath);
@@ -59,9 +61,6 @@ export default λ(async ({
 
     // then upload to s3
     const { Location } = await uploadPromise;
-
-    // kill phantom js process
-    await instance.exit();
 
     // delete the generated pdf
     unlinkSync(filePath);
