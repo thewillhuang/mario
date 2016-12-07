@@ -1,6 +1,6 @@
 import { generateLinkTag, generateScriptTag, phantom2LinuxViewportStyle } from './utils';
 
-export default ({ html, css, cssUrls, jsUrls }) =>
+export default ({ html, css, js, cssUrls, jsUrls }) =>
   `<!DOCTYPE html>
   <html lang="en">
   <head>
@@ -10,6 +10,7 @@ export default ({ html, css, cssUrls, jsUrls }) =>
     <style>${css}</style>
   </head>
   <body>
+    <script>${js}</script>
     ${generateScriptTag(jsUrls)}
     ${html}
   </body>
