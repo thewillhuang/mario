@@ -41,12 +41,10 @@ export default λ(async ({
     await instance.exit();
 
     // setup s3 uploader
-    const Body = createReadStream(filePath);
-
     const params = {
       Bucket,
       Key: fileName,
-      Body,
+      Body: createReadStream(filePath),
       ACL: 'public-read',
       ContentDisposition: contentDisposition(filePath),
       ContentType: mime.lookup(filePath),
