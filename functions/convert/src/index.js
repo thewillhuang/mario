@@ -6,9 +6,10 @@ import { v4 as uuid } from 'uuid';
 import { createReadStream, unlinkSync } from 'fs';
 import contentDisposition from 'content-disposition';
 
+import { isPromise } from './lib/utils';
 import template from './lib/template';
 
-Promise.coroutine.addYieldHandler(value => Promise.resolve(value));
+Promise.coroutine.addYieldHandler(value => (isPromise ? value : Promise.resolve(value)));
 
 export default λ(async ({
   name,
