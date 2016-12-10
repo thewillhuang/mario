@@ -1,10 +1,8 @@
 import λ from 'apex.js';
-import mime from 'mime';
-import AWS from 'aws-sdk';
+// import mime from 'mime';
+// import contentDisposition from 'content-disposition';
 import phantom from 'phantom';
-import { v4 as uuid } from 'uuid';
-import { createReadStream, unlinkSync } from 'fs';
-import contentDisposition from 'content-disposition';
+import { readFileAsync, unlinkAsync } from './lib/fs';
 
 // import { isPromise } from './lib/utils';
 import template from './lib/template';
@@ -18,11 +16,9 @@ export default λ(async ({
   css = '',
   cssUrls = [],
   jsUrls = [],
-  Bucket = 'mario-converter',
   pageConfig,
 }) => {
-  const key = uuid().split('-').join('');
-  const fileName = `${key}-${name}`;
+  const fileName = name;
   const filePath = `/tmp/${fileName}`;
 
   // setup phantom
@@ -41,36 +37,18 @@ export default λ(async ({
     // kill phantom js process
     await instance.exit();
 
-    // setup s3 uploader
-    const params = {
-      Bucket,
-      Key: fileName,
-      Body: createReadStream(filePath),
-      ACL: 'public-read',
-      ContentDisposition: contentDisposition(filePath),
-      ContentType: mime.lookup(filePath),
-    };
-
-    const upload = new AWS.S3.ManagedUpload({ params });
-
-    const uploadPromise = new Promise((resolve, reject) => {
-      upload.send((err, data) => {
-        if (err) { reject(err); }
-        resolve(data);
-      });
-    });
-
-    // then upload to s3
-    const { Location } = await uploadPromise;
+    // read the pdf as base64
+    const content = readFileAsync(filePath, { encoding: 'base64' });
 
     // delete the generated pdf
-    unlinkSync(filePath);
+    await unlinkAsync(filePath);
 
     // return for user content download link
-    return { url: Location };
+    return content;
   } catch (e) {
     // kill phantom js process
     console.log('error', e);
+    await unlinkAsync(filePath);
     await instance.exit();
     return e;
   }
