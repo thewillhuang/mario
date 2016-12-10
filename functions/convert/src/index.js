@@ -2,12 +2,11 @@ import λ from 'apex.js';
 // import mime from 'mime';
 // import contentDisposition from 'content-disposition';
 import phantom from 'phantom';
-import fs, { readFileAsync, unlinkAsync } from './lib/fs';
+import fs from './lib/fs';
 
 // import { isPromise } from './lib/utils';
 import template from './lib/template';
 
-console.log('fs', fs);
 Promise.coroutine.addYieldHandler(value => Promise.resolve(value));
 
 export default λ(async ({
@@ -39,17 +38,17 @@ export default λ(async ({
     await instance.exit();
 
     // read the pdf as base64
-    const content = readFileAsync(filePath, { encoding: 'base64' });
+    const content = await fs.readFileAsync(filePath, { encoding: 'base64' });
 
     // delete the generated pdf
-    await unlinkAsync(filePath);
+    await fs.unlinkAsync(filePath);
 
     // return for user content download link
     return content;
   } catch (e) {
     // kill phantom js process
     console.log('error', e);
-    await unlinkAsync(filePath);
+    await fs.unlinkAsync(filePath);
     await instance.exit();
     return e;
   }
