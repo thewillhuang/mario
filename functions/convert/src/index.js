@@ -1,6 +1,6 @@
 import λ from 'apex.js';
 import phantom from 'phantom';
-import fs from './lib/fs';
+import { readFileAsync, unlinkAsync } from './lib/fs';
 
 import template from './lib/template';
 
@@ -15,7 +15,7 @@ export default λ(async ({
   jsUrls = [],
   pageConfig,
 }) => {
-  const filePath = `/tmp/${name}`;
+  const filePath = `/tmp/${name}.pdf`;
 
   // setup phantom
   const instance = await phantom.create();
@@ -34,17 +34,17 @@ export default λ(async ({
     await instance.exit();
 
     // read the pdf as base64
-    const content = await fs.readFileAsync(filePath, { encoding: 'base64' });
+    const content = await readFileAsync(filePath, { encoding: 'base64' });
 
     // delete the generated pdf
-    await fs.unlinkAsync(filePath);
+    await unlinkAsync(filePath);
 
     // return for user content download link
     return content;
   } catch (e) {
     // kill phantom js process
     console.log('error', e);
-    await fs.unlinkAsync(filePath);
+    await unlinkAsync(filePath);
     await instance.exit();
     return e;
   }
