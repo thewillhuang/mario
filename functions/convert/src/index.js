@@ -1,10 +1,7 @@
 import λ from 'apex.js';
-// import mime from 'mime';
-// import contentDisposition from 'content-disposition';
 import phantom from 'phantom';
 import fs from './lib/fs';
 
-// import { isPromise } from './lib/utils';
 import template from './lib/template';
 
 Promise.coroutine.addYieldHandler(value => Promise.resolve(value));
@@ -18,8 +15,7 @@ export default λ(async ({
   jsUrls = [],
   pageConfig,
 }) => {
-  const fileName = name;
-  const filePath = `/tmp/${fileName}`;
+  const filePath = `/tmp/${name}`;
 
   // setup phantom
   const instance = await phantom.create();
