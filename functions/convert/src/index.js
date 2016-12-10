@@ -1,7 +1,7 @@
 import λ from 'apex.js';
 import phantom from 'phantom';
+import { v4 as uuid } from 'uuid';
 import fs from './lib/fs';
-
 import template from './lib/template';
 
 const { readFileAsync, unlinkAsync } = fs;
@@ -9,7 +9,6 @@ const { readFileAsync, unlinkAsync } = fs;
 Promise.coroutine.addYieldHandler(value => Promise.resolve(value));
 
 export default λ(async ({
-  name,
   html,
   js = '',
   css = '',
@@ -17,7 +16,7 @@ export default λ(async ({
   jsUrls = [],
   pageConfig,
 }) => {
-  const filePath = `/tmp/${name}.pdf`;
+  const filePath = `/tmp/${uuid()}.pdf`;
 
   // setup phantom
   const instance = await phantom.create();
