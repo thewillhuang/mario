@@ -2,11 +2,12 @@ import λ from 'apex.js';
 // import mime from 'mime';
 // import contentDisposition from 'content-disposition';
 import phantom from 'phantom';
-import { readFileAsync, unlinkAsync } from './lib/fs';
+import fs, { readFileAsync, unlinkAsync } from './lib/fs';
 
 // import { isPromise } from './lib/utils';
 import template from './lib/template';
 
+console.log('fs', fs);
 Promise.coroutine.addYieldHandler(value => Promise.resolve(value));
 
 export default λ(async ({
