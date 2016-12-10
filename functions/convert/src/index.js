@@ -22,15 +22,17 @@ export default λ(async ({
   // setup phantom
   const instance = await phantom.create();
   const page = await instance.createPage();
+  const { property, render } = page;
+
   try {
     // sets page property
-    Object.keys(pageConfig).forEach(config => page.property(config, pageConfig[config]));
+    Object.keys(pageConfig).forEach(config => property(config, pageConfig[config]));
 
     // sets content for phantom to render
-    page.property('content', template({ html, css, js, cssUrls, jsUrls }));
+    property('content', template({ html, css, js, cssUrls, jsUrls }));
 
     // render the pdf to file path
-    await page.render(filePath);
+    await render(filePath);
 
     // kill phantom js process
     await instance.exit();
@@ -41,7 +43,7 @@ export default λ(async ({
     // delete the generated pdf
     await unlinkAsync(filePath);
 
-    // return for user content download link
+    // return for user content as base64 and let Api Gateway convert to binary
     return content;
   } catch (e) {
     // kill phantom js process
