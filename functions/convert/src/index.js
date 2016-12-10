@@ -1,8 +1,10 @@
 import λ from 'apex.js';
 import phantom from 'phantom';
-import { readFileAsync, unlinkAsync } from './lib/fs';
+import fs from './lib/fs';
 
 import template from './lib/template';
+
+const { readFileAsync, unlinkAsync } = fs;
 
 Promise.coroutine.addYieldHandler(value => Promise.resolve(value));
 
