@@ -16,10 +16,10 @@ Try it out:
 
 native modules on lambda
 ```
-$ echo '{ "html": "<p>hello world</p>", "css": "* {color: red;}", "name": "output.pdf", "pageConfig": { "format": "A4", "orientation": "landscape" } }' | apex invoke convert
+$ echo '{ "html": "<p>hello world</p>", "css": "* {color: red;}", "pageConfig": { "format": "A4", "orientation": "landscape" } }' | apex invoke convert
 ```
 
 api gateway (throttled)
 ```
-$ curl -H "Content-Type: application/json" -H "Accept: application/pdf" -X POST -d '{ "html": "<p>hello world</p>", "css": "* {color: red;}", "name": "output.pdf", "pageConfig": { "format": "A4", "orientation": "landscape" } }' https://8i6ymbqx15.execute-api.us-east-1.amazonaws.com/dev > ~/Desktop/output.pdf
+$ curl -H "Content-Type: application/json" -H "Accept: application/pdf" -X POST -d '{ "html": "<p>hello world</p>", "css": "* {color: red;}", "pageConfig": { "format": "A4", "orientation": "landscape" } }' https://8i6ymbqx15.execute-api.us-east-1.amazonaws.com/dev > ~/Desktop/output.pdf
 ```

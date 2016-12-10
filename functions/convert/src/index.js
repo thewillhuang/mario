@@ -21,17 +21,16 @@ export default λ(async ({
   // setup phantom
   const instance = await phantom.create();
   const page = await instance.createPage();
-  const { property, render } = page;
 
   try {
     // sets page property
-    Object.keys(pageConfig).forEach(config => property(config, pageConfig[config]));
+    Object.keys(pageConfig).forEach(config => page.property(config, pageConfig[config]));
 
     // sets content for phantom to render
-    property('content', template({ html, css, js, cssUrls, jsUrls }));
+    page.property('content', template({ html, css, js, cssUrls, jsUrls }));
 
     // render the pdf to file path
-    await render(filePath);
+    await page.render(filePath);
 
     // kill phantom js process
     await instance.exit();
