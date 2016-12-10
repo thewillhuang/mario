@@ -6,8 +6,6 @@ import template from './lib/template';
 
 const { readFileAsync, unlinkAsync } = fs;
 
-Promise.coroutine.addYieldHandler(value => Promise.resolve(value));
-
 export default λ(async ({
   html,
   js = '',
