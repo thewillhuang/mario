@@ -20,6 +20,12 @@ export default λ(async ({
   const instance = await phantom.create();
   const page = await instance.createPage();
 
+  const cleanup = async () => {
+    // kill phantom js process
+    await instance.exit();
+    await unlinkAsync(filePath);
+  };
+
   try {
     // sets page property
     Object.keys(pageConfig).forEach(config => page.property(config, pageConfig[config]));
@@ -30,22 +36,18 @@ export default λ(async ({
     // render the pdf to file path
     await page.render(filePath);
 
-    // kill phantom js process
-    await instance.exit();
-
     // read the pdf as base64
     const content = await readFileAsync(filePath, { encoding: 'base64' });
 
-    // delete the generated pdf
-    await unlinkAsync(filePath);
+    // clean up
+    cleanup();
 
     // return for user content as base64 and let Api Gateway convert to binary
     return content;
   } catch (e) {
-    // kill phantom js process
     console.log('error', e);
-    await unlinkAsync(filePath);
-    await instance.exit();
+    // cleanup
+    cleanup();
     return e;
   }
 });
