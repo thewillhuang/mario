@@ -20,6 +20,7 @@ export default λ(async ({
   jsUrls = [],
   pageConfig,
 }) => {
+  // lambda only gives permission on /tmp/
   const filePath = `/tmp/${uuid()}.pdf`;
 
   // setup phantom
