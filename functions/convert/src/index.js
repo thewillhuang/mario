@@ -6,6 +6,12 @@ import template from './lib/template';
 
 const { readFileAsync, unlinkAsync } = fs;
 
+const cleanup = async (instance, filePath) => {
+  // kill phantom js process
+  await instance.exit();
+  await unlinkAsync(filePath);
+};
+
 export default λ(async ({
   html,
   js = '',
@@ -19,12 +25,6 @@ export default λ(async ({
   // setup phantom
   const instance = await phantom.create();
   const page = await instance.createPage();
-
-  const cleanup = async () => {
-    // kill phantom js process
-    await instance.exit();
-    await unlinkAsync(filePath);
-  };
 
   try {
     // sets page property
@@ -40,14 +40,14 @@ export default λ(async ({
     const content = await readFileAsync(filePath, { encoding: 'base64' });
 
     // clean up
-    cleanup();
+    cleanup(instance, filePath);
 
     // return for user content as base64 and let Api Gateway convert to binary
     return content;
   } catch (e) {
     console.log('error', e);
     // cleanup
-    cleanup();
+    cleanup(instance, filePath);
     return e;
   }
 });
