@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "phantom": "2.1.21",
-    "phantom-pool": "^1.0.0"
+    "phantom": "2.1.21"
   }
 }
