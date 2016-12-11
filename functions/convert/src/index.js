@@ -1,10 +1,18 @@
 import λ from 'apex.js';
-import phantom from 'phantom';
+// import phantom from 'phantom';
+import createPhantomPool from 'phantom-pool';
 import { v4 as uuid } from 'uuid';
 import fs from './lib/fs';
 import template from './lib/template';
 
 const { readFileAsync, unlinkAsync } = fs;
+const pool = createPhantomPool();
+
+const cleanup = async (path) => {
+  // kill phantom js process
+  // await instance.exit();
+  await unlinkAsync(path);
+};
 
 export default λ(async ({
   html,
@@ -15,39 +23,34 @@ export default λ(async ({
   pageConfig,
 }) => {
   const filePath = `/tmp/${uuid()}.pdf`;
-
   // setup phantom
-  const instance = await phantom.create();
-  const page = await instance.createPage();
+  // const instance = await phantom.create();
+  // const page = await instance.createPage();
+  pool.use(async (instance) => {
+    const page = await instance.createPage();
+    try {
+     // sets page property
+      Object.keys(pageConfig).forEach(config => page.property(config, pageConfig[config]));
 
-  const cleanup = async () => {
-    // kill phantom js process
-    await instance.exit();
-    await unlinkAsync(filePath);
-  };
+     // sets content for phantom to render
+      page.property('content', template({ html, css, js, cssUrls, jsUrls }));
 
-  try {
-    // sets page property
-    Object.keys(pageConfig).forEach(config => page.property(config, pageConfig[config]));
+     // render the pdf to file path
+      await page.render(filePath);
 
-    // sets content for phantom to render
-    page.property('content', template({ html, css, js, cssUrls, jsUrls }));
+     // read the pdf as base64
+      const content = await readFileAsync(filePath, { encoding: 'base64' });
 
-    // render the pdf to file path
-    await page.render(filePath);
+     // clean up
+      cleanup(filePath);
 
-    // read the pdf as base64
-    const content = await readFileAsync(filePath, { encoding: 'base64' });
-
-    // clean up
-    cleanup();
-
-    // return for user content as base64 and let Api Gateway convert to binary
-    return content;
-  } catch (e) {
-    console.log('error', e);
-    // cleanup
-    cleanup();
-    return e;
-  }
+     // return for user content as base64 and let Api Gateway convert to binary
+      return content;
+    } catch (e) {
+     console.log('error', e);
+     // cleanup
+      cleanup(filePath);
+      return e;
+    }
+  });
 });

@@ -15,6 +15,7 @@ module.exports = {
     'aws-sdk',
     // [native c/c++] modules
     'phantom',
+    'phantom-pool',
   ],
   module: {
     loaders: [
