@@ -14,6 +14,7 @@ const cleanup = async (instance, filePath) => {
 };
 
 export default λ(async ({
+  ping,
   html,
   js = '',
   css = '',
@@ -21,6 +22,9 @@ export default λ(async ({
   jsUrls = [],
   pageConfig,
 }) => {
+  // heartbeat
+  if (ping) { return 'heartbeat'; }
+
   // lambda only gives permission on /tmp/
   const filePath = `/tmp/${uuid()}.pdf`;
 
