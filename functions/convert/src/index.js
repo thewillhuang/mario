@@ -12,14 +12,18 @@ const cleanup = async (instance, filePath) => {
   await unlinkAsync(filePath);
 };
 
-export default λ(async ({
-  html,
-  js = '',
-  css = '',
-  cssUrls = [],
-  jsUrls = [],
-  pageConfig,
-}) => {
+export default λ(async ({ input: { body } }) => {
+  console.log('body is: ', body);
+  // intergrate with Api gateway Proxy
+  const {
+    html,
+    js = '',
+    css = '',
+    cssUrls = [],
+    jsUrls = [],
+    pageConfig,
+  } = JSON.parse(body);
+
   // lambda only gives permission on /tmp/
   const filePath = `/tmp/${uuid()}.pdf`;
 
