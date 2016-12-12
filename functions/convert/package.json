@@ -1,5 +1,5 @@
 {
-  "name": "graphql",
+  "name": "convert",
   "version": "1.0.0",
   "description": "native modules required by lambda",
   "main": "index.js",

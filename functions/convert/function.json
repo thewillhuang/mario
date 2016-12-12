@@ -4,7 +4,7 @@
   "role": "arn:aws:iam::015847073762:role/mario_lambda_function",
   "runtime": "nodejs4.3",
   "handler": "dist.default",
-  "memory": 1536,
+  "memory": 1028,
   "timeout": 5,
   "hooks": {
     "build": "rm -fr node_modules; $HOME/.yarn/bin/yarn install ; ../../node_modules/.bin/webpack --config ../../webpack.config.js;",
