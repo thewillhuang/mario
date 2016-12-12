@@ -1,6 +1,5 @@
 import λ from 'apex.js';
 import phantom from 'phantom';
-import { v4 as uuid } from 'uuid';
 import fs from './lib/fs';
 import template from './lib/template';
 
@@ -21,7 +20,7 @@ export default λ(async ({
   pageConfig,
 }) => {
   // lambda only gives permission on /tmp/
-  const filePath = `/tmp/${uuid()}.pdf`;
+  const filePath = '/tmp/output.pdf';
 
   // setup phantom
   const instance = await phantom.create();
