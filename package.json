@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "apex.js": "^2.0.0",
-    "babel-core": "6.21.0",
+    "babel-core": "6.23.1",
     "babel-loader": "6.2.10",
     "babel-plugin-transform-promise-to-bluebird": "^1.1.1",
     "babel-plugin-transform-runtime": "^6.15.0",
