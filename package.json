@@ -21,6 +21,6 @@
     "babel-preset-stage-0": "^6.16.0",
     "bluebird": "^3.4.6",
     "uuid": "^3.0.1",
-    "webpack": "2.3.0"
+    "webpack": "2.3.3"
   }
 }
