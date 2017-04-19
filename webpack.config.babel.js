@@ -24,10 +24,6 @@ export default {
     ],
   },
   plugins: [
-    new webpack.NormalModuleReplacementPlugin(
-      /babel-runtime\/core-js\/promise/,
-      'bluebird',
-    ),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
