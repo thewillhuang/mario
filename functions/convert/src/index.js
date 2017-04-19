@@ -5,8 +5,10 @@ import { S3, config } from 'aws-sdk';
 import mime from 'mime';
 import contentDisposition from 'content-disposition';
 import fs from './lib/fs';
+import zlib from 'zlib';
 import template from './lib/template';
 
+const gzip = zlib.createGzip();
 const { createReadStream, unlinkAsync } = fs;
 const s3 = new S3();
 
@@ -49,9 +51,10 @@ export default λ(async ({
     // render the pdf to file path
     await page.render(filePath);
 
-    const Body = createReadStream(filePath);
+    const Body = createReadStream(filePath).pipe(gzip);
     const ContentDisposition = contentDisposition(filePath);
     const ContentType = mime.lookup(filePath);
+    const ContentEncoding = 'gzip';
     const ACL = 'public-read';
 
     const params = {
@@ -59,6 +62,7 @@ export default λ(async ({
       Bucket: 'mario-pdf-upload',
       Key,
       Body,
+      ContentEncoding,
       ContentDisposition,
       ContentType,
     };
