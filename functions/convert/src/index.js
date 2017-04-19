@@ -62,6 +62,7 @@ export default λ(async ({
 
     // clean up
     cleanup(instance, filePath);
+
     console.timeEnd('duration');
     return { url: Location };
   } catch (e) {
