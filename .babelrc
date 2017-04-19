@@ -8,7 +8,6 @@
     }]
   ],
   "plugins": [
-    "closure-elimination",
     "ramda",
     ["transform-async-to-module-method", {
       "module": "bluebird",
