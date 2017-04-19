@@ -33,6 +33,7 @@ export default λ(async ({
 
   // lambda only gives write permission on /tmp/
   const filePath = `/tmp/${uuid()}.pdf`;
+  console.log(lookup(filePath));
 
   // setup phantom
   const instance = await phantom.create();
@@ -47,8 +48,6 @@ export default λ(async ({
 
     // render the pdf to file path
     await page.render(filePath);
-
-    // read the pdf as base64
 
     const upload = s3.upload({
       params: {
