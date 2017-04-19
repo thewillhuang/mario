@@ -1,9 +1,8 @@
 {
-  "name": "MakrAcademy",
+  "name": "mario",
   "version": "1.0.0",
-  "description": "makr academy main site",
-  "main": "index.js",
-  "repository": "git@github.com:thewillhuang/MakrAcademy.git",
+  "description": "webpage to pdf",
+  "repository": "git@github.com:thewillhuang/mario.git",
   "author": "William Huang <will.h86@gmail.com>",
   "license": "MIT",
   "dependencies": {
