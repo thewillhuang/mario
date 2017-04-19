@@ -2,7 +2,7 @@ import λ from 'apex.js';
 import phantom from 'phantom';
 import { v4 as uuid } from 'uuid';
 import { S3, config } from 'aws-sdk';
-import { lookup } from 'mime';
+import mime from 'mime';
 import contentDisposition from 'content-disposition';
 import fs from './lib/fs';
 import template from './lib/template';
@@ -11,8 +11,6 @@ const { createReadStream, unlinkAsync } = fs;
 const s3 = new S3();
 
 config.setPromisesDependency(global.Promise);
-
-console.log(lookup);
 
 const cleanup = async (instance, filePath) => {
   // kill phantom js process
@@ -49,7 +47,6 @@ export default λ(async ({
 
     // render the pdf to file path
     await page.render(filePath);
-    console.log(lookup(filePath));
 
     const upload = s3.upload({
       params: {
@@ -57,7 +54,7 @@ export default λ(async ({
         Key: uuid(),
         Body: createReadStream(filePath),
         ContentDisposition: contentDisposition(filePath),
-        ContentType: lookup(filePath),
+        ContentType: mime.lookup(filePath),
       },
     });
 
