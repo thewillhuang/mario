@@ -1,5 +1,14 @@
 {
-  "name": "mario",
+  "name": "luigi",
+  "description": "webpage to pdf service",
   "memory": 128,
-  "timeout": 3
+  "timeout": 2,
+  "role": "arn:aws:iam::015847073762:role/luigi_lambda_function",
+  "runtime": "nodejs6.10",
+  "handler": "dist.default",
+  "hooks": {
+    "build": "if [ -f package.json ]; then ~/.yarn/bin/yarn; fi; ../../node_modules/.bin/webpack --config ../../webpack.config.babel.js --bail",
+    "clean": "rm -fr dist node_modules"
+  },
+  "environment": {}
 }
