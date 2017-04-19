@@ -4,8 +4,8 @@ import { v4 as uuid } from 'uuid';
 import { S3, config } from 'aws-sdk';
 import mime from 'mime';
 import contentDisposition from 'content-disposition';
-import fs from './lib/fs';
 import zlib from 'zlib';
+import fs from './lib/fs';
 import template from './lib/template';
 
 const gzip = zlib.createGzip();
