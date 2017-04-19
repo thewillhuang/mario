@@ -5,6 +5,7 @@ import { S3, config } from 'aws-sdk';
 import mime from 'mime';
 import contentDisposition from 'content-disposition';
 import zlib from 'zlib';
+import disk from 'diskusage';
 import fs from './lib/fs';
 import template from './lib/template';
 
@@ -19,6 +20,8 @@ const cleanup = async (instance, filePath) => {
   // kill phantom js process
   await instance.exit();
   await unlinkAsync(filePath);
+  const info = disk.checkSync('/');
+  console.log('freespace', info.free);
   console.timeEnd('file cleanup duration');
 };
 
