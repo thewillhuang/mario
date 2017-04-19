@@ -2,13 +2,13 @@ import λ from 'apex.js';
 import phantom from 'phantom';
 import { v4 as uuid } from 'uuid';
 import { S3, config } from 'aws-sdk';
-
+import { lookup } from 'mime';
+import contentDisposition from 'content-disposition';
 import fs from './lib/fs';
 import template from './lib/template';
 
 const { createReadStream, unlinkAsync } = fs;
-
-console.log(S3, config);
+const s3 = new S3();
 
 config.setPromisesDependency(global.Promise);
 
@@ -50,8 +50,14 @@ export default λ(async ({
 
     // read the pdf as base64
 
-    const upload = new S3.ManagedUpload({
-      params: { Bucket: 'pdf-upload-test', Key: uuid(), Body: createReadStream(filePath) },
+    const upload = s3.upload({
+      params: {
+        Bucket: 'pdf-upload-test',
+        Key: uuid(),
+        Body: createReadStream(filePath),
+        ContentDisposition: contentDisposition(filePath),
+        ContentType: lookup(filePath),
+      },
     });
 
     const { Location } = await upload.promise();
