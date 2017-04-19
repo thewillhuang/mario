@@ -20,8 +20,7 @@ const cleanup = async (instance, filePath) => {
   // kill phantom js process
   await instance.exit();
   await unlinkAsync(filePath);
-  const info = disk.checkSync('/');
-  console.log('freespace', info.free);
+  console.log('freespace', disk.checkSync('/').info.free);
   console.timeEnd('file cleanup duration');
 };
 
