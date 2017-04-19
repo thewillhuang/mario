@@ -6,6 +6,8 @@ phases:
       - curl -o- -L https://yarnpkg.com/install.sh | bash
       - curl https://raw.githubusercontent.com/apex/apex/master/install.sh | sh
       - ~/.yarn/bin/yarn
+      - cd functions/convert && ~/.yarn/bin/yarn
+      - cd ../..
   # pre_build:
   #   commands:
   #     - echo Nothing to do in the pre_build phase...
