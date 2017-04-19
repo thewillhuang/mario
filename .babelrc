@@ -9,6 +9,7 @@
   ],
   "plugins": [
     "ramda",
+    "transform-promise-to-bluebird",
     "transform-runtime"
   ]
 }
