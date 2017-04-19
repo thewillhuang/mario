@@ -8,7 +8,7 @@ import zlib from 'zlib';
 import fs from './lib/fs';
 import template from './lib/template';
 
-const gzip = zlib.createGzip();
+const gzip = zlib.createGzip({ level: 9 });
 const { createReadStream, unlinkAsync } = fs;
 const s3 = new S3();
 
