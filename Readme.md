@@ -17,7 +17,7 @@ http://phantomjs.org/api/webpage/
 
 #### Try it out
 ```bash
-curl -H "Content-Type: application/json" -H "Accept: application/pdf" -X POST -d '{ "html": "<p>Hello World</p>", "css": "* { color: orange; }",  "pageConfig": { "paperSize" : { "format": "A4", "orientation": "landscape" } } }' https://8i6ymbqx15.execute-api.us-east-1.amazonaws.com/dev > ~/Desktop/output.pdf
+curl -H "Content-Type: application/json" -H "Accept: application/pdf" -X POST -d '{ "html": "<p>Hello World</p>", "css": "* { color: orange; }",  "pageConfig": { "paperSize" : { "format": "A4", "orientation": "landscape" } } }' https://4bsdjq15h1.execute-api.us-east-1.amazonaws.com/prod
 ```
 
 #### Example payload
