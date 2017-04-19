@@ -9,7 +9,6 @@ import disk from 'diskusage';
 import fs from './lib/fs';
 import template from './lib/template';
 
-const gzip = zlib.createGzip({ level: 9 });
 const { createReadStream, unlinkAsync } = fs;
 const s3 = new S3();
 
@@ -57,6 +56,7 @@ export default λ(async ({
     console.timeEnd('lambda pdf generation duration');
 
     console.time('upload pdf to s3 duration');
+    const gzip = zlib.createGzip({ level: 9 });
     const upload = s3.upload({
       ACL: 'public-read',
       Bucket: 'mario-pdf-upload',
