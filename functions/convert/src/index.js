@@ -56,12 +56,11 @@ export default λ(async ({
     console.timeEnd('lambda pdf generation duration');
 
     console.time('upload pdf to s3 duration');
-    const gzip = zlib.createGzip({ level: 9 });
     const upload = s3.upload({
       ACL: 'public-read',
       Bucket: 'mario-pdf-upload',
       Key,
-      Body: createReadStream(filePath).pipe(gzip),
+      Body: createReadStream(filePath).pipe(zlib.createGzip({ level: 9 })),
       ContentEncoding: 'gzip',
       ContentDisposition: contentDisposition(filePath),
       ContentType: mime.lookup(filePath),
