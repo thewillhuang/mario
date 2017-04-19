@@ -48,11 +48,14 @@ export default λ(async ({
     // render the pdf to file path
     await page.render(filePath);
 
+    const Body = createReadStream(filePath);
+    console.log(Body);
+
     const upload = s3.upload({
       params: {
         Bucket: 'mario-pdf-upload',
         Key: uuid(),
-        Body: createReadStream(filePath),
+        Body,
         ContentDisposition: contentDisposition(filePath),
         ContentType: mime.lookup(filePath),
       },
