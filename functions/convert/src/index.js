@@ -32,7 +32,8 @@ export default λ(async ({
   if (ping) { return { message: 'ack' }; }
 
   // lambda only gives write permission on /tmp/
-  const filePath = `/tmp/${uuid()}.pdf`;
+  const fileName = `${uuid().pdf}`;
+  const filePath = `/tmp/${fileName}`;
 
   // setup phantom
   const instance = await phantom.create();
