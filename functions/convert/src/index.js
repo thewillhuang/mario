@@ -52,7 +52,7 @@ export default λ(async ({
 
     const upload = s3.upload({
       params: {
-        Bucket: 'pdf-upload-test',
+        Bucket: 'mario-pdf-upload',
         Key: uuid(),
         Body: createReadStream(filePath),
         ContentDisposition: contentDisposition(filePath),
