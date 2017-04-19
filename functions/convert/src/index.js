@@ -12,6 +12,8 @@ const s3 = new S3();
 
 config.setPromisesDependency(global.Promise);
 
+console.log(lookup);
+
 const cleanup = async (instance, filePath) => {
   // kill phantom js process
   await instance.exit();
