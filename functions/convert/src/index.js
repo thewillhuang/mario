@@ -29,7 +29,6 @@ export default λ(async ({
   jsUrls = [],
   pageConfig,
 }) => {
-  console.time('duration');
   // heartbeat
   if (ping) { return { message: 'ack' }; }
 
@@ -37,6 +36,7 @@ export default λ(async ({
   const Key = `${uuid()}.pdf`;
   const filePath = `/tmp/${Key}`;
 
+  console.time('lambda pdf generation duration');
   // setup phantom
   const instance = await phantom.create();
   const page = await instance.createPage();
@@ -50,31 +50,25 @@ export default λ(async ({
 
     // render the pdf to file path
     await page.render(filePath);
+    console.timeEnd('lambda pdf generation duration');
 
-    const Body = createReadStream(filePath).pipe(gzip);
-    const ContentDisposition = contentDisposition(filePath);
-    const ContentType = mime.lookup(filePath);
-    const ContentEncoding = 'gzip';
-    const ACL = 'public-read';
-
-    const params = {
-      ACL,
+    console.time('upload pdf to s3 duration');
+    const upload = s3.upload({
+      ACL: 'public-read',
       Bucket: 'mario-pdf-upload',
       Key,
-      Body,
-      ContentEncoding,
-      ContentDisposition,
-      ContentType,
-    };
-
-    const upload = s3.upload(params);
+      Body: createReadStream(filePath).pipe(gzip),
+      ContentEncoding: 'gzip',
+      ContentDisposition: contentDisposition(filePath),
+      ContentType: mime.lookup(filePath),
+    });
 
     const { Location } = await upload.promise();
+    console.timeEnd('upload pdf to s3 duration');
 
     // clean up
     cleanup(instance, filePath);
 
-    console.timeEnd('duration');
     return { url: Location };
   } catch (e) {
     console.log('error', e);
