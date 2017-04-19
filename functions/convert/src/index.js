@@ -15,9 +15,11 @@ const s3 = new S3();
 config.setPromisesDependency(global.Promise);
 
 const cleanup = async (instance, filePath) => {
+  console.time('file cleanup duration');
   // kill phantom js process
   await instance.exit();
   await unlinkAsync(filePath);
+  console.timeEnd('file cleanup duration');
 };
 
 export default λ(async ({
