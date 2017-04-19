@@ -32,8 +32,8 @@ export default λ(async ({
   if (ping) { return { message: 'ack' }; }
 
   // lambda only gives write permission on /tmp/
-  const fileName = `${uuid()}.pdf`;
-  const filePath = `/tmp/${fileName}`;
+  const Key = `${uuid()}.pdf`;
+  const filePath = `/tmp/${Key}`;
 
   // setup phantom
   const instance = await phantom.create();
@@ -55,7 +55,7 @@ export default λ(async ({
 
     const params = {
       Bucket: 'mario-pdf-upload',
-      Key: uuid(),
+      Key,
       Body,
       ContentDisposition,
       ContentType,
