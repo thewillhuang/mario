@@ -23,15 +23,17 @@ const cleanup = async (instance, filePath) => {
   console.timeEnd('file cleanup duration');
 };
 
-export default λ(async ({
-  ping,
-  html = '',
-  js = '',
-  css = '',
-  cssUrls = [],
-  jsUrls = [],
-  pageConfig,
-}) => {
+export default λ(async (event) => {
+  const {
+    ping,
+    html = '',
+    js = '',
+    css = '',
+    cssUrls = [],
+    jsUrls = [],
+    pageConfig,
+  } = event;
+  console.log(`payload size: ${~-encodeURI(JSON.stringify(event)).split(/%..|./).length}`);
   // heartbeat
   if (ping) { return { message: 'ack' }; }
 
