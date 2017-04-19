@@ -15,7 +15,7 @@ const cleanup = async (instance, filePath) => {
 
 export default λ(async ({
   ping,
-  html,
+  html = '<p>no html content</p>',
   js = '',
   css = '',
   cssUrls = [],
