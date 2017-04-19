@@ -9,6 +9,7 @@ import template from './lib/template';
 
 const { createReadStream, unlinkAsync } = fs;
 const s3 = new S3();
+const { Bucket } = process.env;
 
 config.setPromisesDependency(global.Promise);
 
@@ -52,9 +53,11 @@ export default λ(async ({
     const Body = createReadStream(filePath);
     const ContentDisposition = contentDisposition(filePath);
     const ContentType = mime.lookup(filePath);
+    const ACL = 'public-read';
 
     const params = {
-      Bucket: 'mario-pdf-upload',
+      ACL,
+      Bucket,
       Key,
       Body,
       ContentDisposition,
