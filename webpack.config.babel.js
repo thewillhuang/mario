@@ -10,7 +10,7 @@ export default {
     filename: 'index.js',
     libraryTarget: 'commonjs2',
   },
-  externals: ['aws-sdk'],
+  externals: ['aws-sdk', 'phantom'],
   module: {
     rules: [
       {
