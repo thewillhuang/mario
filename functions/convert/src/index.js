@@ -15,11 +15,14 @@ const s3 = new S3();
 config.setPromisesDependency(global.Promise);
 
 const cleanup = async (instance, filePath) => {
+  // eslint-disable-next-line
   console.time('file cleanup duration');
   // kill phantom js process
   await instance.exit();
   await unlinkAsync(filePath);
-  console.log('freespace', disk.checkSync('/').free);
+  // eslint-disable-next-line
+  console.log(`freespace: ${disk.checkSync('/').free / 1000000} MB`);
+  // eslint-disable-next-line
   console.timeEnd('file cleanup duration');
 };
 
@@ -33,14 +36,15 @@ export default λ(async (event) => {
     jsUrls = [],
     pageConfig,
   } = event;
-  console.log(`payload size: ${~-encodeURI(JSON.stringify(event)).split(/%..|./).length}`);
+  // eslint-disable-next-line
+  console.log(`payload size is ${~-encodeURI(JSON.stringify(event)).split(/%..|./).length / 1000000} MB`);
   // heartbeat
   if (ping) { return { message: 'ack' }; }
 
   // lambda only gives write permission on /tmp/
   const Key = `${uuid()}.pdf`;
   const filePath = `/tmp/${Key}`;
-
+  // eslint-disable-next-line
   console.time('lambda pdf generation duration');
   // setup phantom
   const instance = await phantom.create();
@@ -55,8 +59,9 @@ export default λ(async (event) => {
 
     // render the pdf to file path
     await page.render(filePath);
+    // eslint-disable-next-line
     console.timeEnd('lambda pdf generation duration');
-
+    // eslint-disable-next-line
     console.time('upload pdf to s3 duration');
     const upload = s3.upload({
       ACL: 'public-read',
@@ -69,6 +74,7 @@ export default λ(async (event) => {
     });
 
     const { Location } = await upload.promise();
+    // eslint-disable-next-line
     console.timeEnd('upload pdf to s3 duration');
 
     // clean up
@@ -76,6 +82,7 @@ export default λ(async (event) => {
 
     return { url: Location };
   } catch (e) {
+    // eslint-disable-next-line
     console.log('error', e);
     // cleanup
     cleanup(instance, filePath);
