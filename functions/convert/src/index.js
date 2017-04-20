@@ -65,7 +65,7 @@ export default λ(async (event) => {
     // eslint-disable-next-line
     console.time('generate pdf duration');
     // render the pdf to file path
-    await page.render(filePath);
+    await page.render(filePath, { quality: '100' });
     // eslint-disable-next-line
     console.timeEnd('generate pdf duration');
     // eslint-disable-next-line
