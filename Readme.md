@@ -38,5 +38,5 @@ curl -H "Content-Type: application/json" -H "Accept: application/pdf" -X POST -d
 - http://docs.aws.amazon.com/lambda/latest/dg/limits.html
 - 2 dashboard charts is around 0.8mb, limit for payload is is 6mb, so theoretically we could print a dashboard with 13-20 dashboards depending on type (excluding images), if we really really wanted to, we could gzip -> base64 encode the content to send more.
 - current implementation which is to transfer html + css to render, bypassing login auth etc. We can easily render more images if we made a webpage for lambda to view.
-- delete requests on s3 are free, so implementing a TTL (time to live) lambda that triggers every day / minute / second to delete files will cost pretty much nothing https://aws.amazon.com/s3/pricing/ 1 million free / month
+- delete requests on s3 are free, so implementing a TTL (time to live) lambda that triggers every day / minute / second to delete files will cost pretty much nothing https://aws.amazon.com/s3/pricing/ 1 million free (lambda calls) / month
 - because this is lambda, we can also pretty much handle all pdf generation in excess of 2000 / second.
