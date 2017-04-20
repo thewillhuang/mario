@@ -37,7 +37,7 @@ export default λ(async (event) => {
     cssUrls = [],
     jsUrls = [],
     pageConfig,
-    fileType = 'pdf',
+    format = 'pdf',
   } = event;
   // eslint-disable-next-line
   console.log(`payload size is ${~-encodeURI(JSON.stringify(event)).split(/%..|./).length / 1000000} MB`);
@@ -45,7 +45,7 @@ export default λ(async (event) => {
   if (ping) { return { message: 'ack' }; }
 
   // lambda only gives write permission on /tmp/
-  const Key = `${uuid()}.${fileType}`;
+  const Key = `${uuid()}.${format}`;
   const filePath = `/tmp/${Key}`;
   // eslint-disable-next-line
   // setup phantom
@@ -65,7 +65,7 @@ export default λ(async (event) => {
     // eslint-disable-next-line
     console.time('generate pdf duration');
     // render the pdf to file path
-    await page.render(filePath, { quality: '100' });
+    await page.render(filePath, { format, quality: '100' });
     // eslint-disable-next-line
     console.timeEnd('generate pdf duration');
     // eslint-disable-next-line
