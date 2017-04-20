@@ -6,6 +6,8 @@ import mime from 'mime';
 import contentDisposition from 'content-disposition';
 import zlib from 'zlib';
 import disk from 'diskusage';
+
+import autoprefixed from './lib/autoprefix';
 import fs from './lib/fs';
 import template from './lib/template';
 
@@ -45,7 +47,6 @@ export default λ(async (event) => {
   const Key = `${uuid()}.pdf`;
   const filePath = `/tmp/${Key}`;
   // eslint-disable-next-line
-  console.time('lambda pdf generation duration');
   // setup phantom
   const instance = await phantom.create();
   const page = await instance.createPage();
@@ -55,8 +56,9 @@ export default λ(async (event) => {
     Object.keys(pageConfig).forEach(options => page.property(options, pageConfig[options]));
 
     // sets content for phantom to render
-    page.property('content', template({ html, css, js, cssUrls, jsUrls }));
+    page.property('content', template({ html, css: autoprefixed(css), js, cssUrls, jsUrls }));
 
+    console.time('lambda pdf generation duration');
     // render the pdf to file path
     await page.render(filePath);
     // eslint-disable-next-line
