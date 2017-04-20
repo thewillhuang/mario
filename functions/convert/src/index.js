@@ -19,13 +19,13 @@ config.setPromisesDependency(global.Promise);
 
 const cleanup = async (instance, filePath) => {
   // eslint-disable-next-line
-  console.time('file cleanup duration');
+  console.time('file cleanup');
   // kill phantom js process
   await Promise.all([instance.exit(), unlinkAsync(filePath)]);
   // eslint-disable-next-line
   console.log(`used: ${575 - (disk.checkSync('/tmp').free / 1000000)} MB`);
   // eslint-disable-next-line
-  console.timeEnd('file cleanup duration');
+  console.timeEnd('file cleanup');
 };
 
 export default λ(async (event) => {
@@ -50,11 +50,11 @@ export default λ(async (event) => {
   // eslint-disable-next-line
   // setup phantom
   // eslint-disable-next-line
-  console.time('spin up phantom duration');
+  console.time('spin up phantom');
   const instance = await phantom.create();
   const page = await instance.createPage();
   // eslint-disable-next-line
-  console.timeEnd('spin up phantom duration');
+  console.timeEnd('spin up phantom');
   try {
     // sets page property
     Object.keys(pageConfig).forEach(options => page.property(options, pageConfig[options]));
@@ -63,14 +63,14 @@ export default λ(async (event) => {
     page.property('content', template({ html, css: autoprefixed(css), js, cssUrls, jsUrls }));
 
     // eslint-disable-next-line
-    console.time('generate pdf duration');
+    console.time('generate content');
     // render the pdf to file path
 
     await page.render(filePath, { format, quality: '100' });
     // eslint-disable-next-line
-    console.timeEnd('generate pdf duration');
+    console.timeEnd('generate content');
     // eslint-disable-next-line
-    console.time('upload pdf to s3 duration');
+    console.time('upload pdf to s3');
 
     const params = {
       Bucket: 'mario-pdf-upload',
@@ -84,7 +84,7 @@ export default λ(async (event) => {
 
     await upload.promise();
     // eslint-disable-next-line
-    console.timeEnd('upload pdf to s3 duration');
+    console.timeEnd('upload pdf to s3');
 
     // clean up
     cleanup(instance, filePath);
