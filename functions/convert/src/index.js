@@ -6,6 +6,7 @@ import mime from 'mime';
 import contentDisposition from 'content-disposition';
 import zlib from 'zlib';
 import disk from 'diskusage';
+import { pick } from 'ramda';
 
 import autoprefixed from './lib/autoprefix';
 import fs from './lib/fs';
@@ -20,8 +21,7 @@ const cleanup = async (instance, filePath) => {
   // eslint-disable-next-line
   console.time('file cleanup duration');
   // kill phantom js process
-  await instance.exit();
-  await unlinkAsync(filePath);
+  await Promise.all([instance.exit(), unlinkAsync(filePath)]);
   // eslint-disable-next-line
   console.log(`used: ${575 - (disk.checkSync('/tmp').free / 1000000)} MB`);
   // eslint-disable-next-line
@@ -72,24 +72,28 @@ export default λ(async (event) => {
     // eslint-disable-next-line
     console.time('upload pdf to s3 duration');
 
-    const upload = s3.upload({
-      ACL: 'public-read',
+    const params = {
       Bucket: 'mario-pdf-upload',
       Key,
       Body: createReadStream(filePath).pipe(zlib.createGzip({ level: 9 })),
       ContentEncoding: 'gzip',
       ContentDisposition: contentDisposition(filePath),
       ContentType: mime.lookup(filePath),
-    });
+    };
+    const upload = s3.upload(params);
 
-    const { Location } = await upload.promise();
+    await upload.promise();
     // eslint-disable-next-line
     console.timeEnd('upload pdf to s3 duration');
 
     // clean up
     cleanup(instance, filePath);
-
-    return { url: Location };
+    // eslint-disable-next-line
+    console.time('generated signed url');
+    const url = s3.getSignedUrl('getObject', pick(['Bucket', 'Key'], params));
+    // eslint-disable-next-line
+    console.timeEnd('generated signed url');
+    return { url };
   } catch (e) {
     // eslint-disable-next-line
     console.log('error', e);
