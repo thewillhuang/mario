@@ -21,7 +21,7 @@ const cleanup = async (instance, filePath) => {
   await instance.exit();
   await unlinkAsync(filePath);
   // eslint-disable-next-line
-  console.log(`freespace: ${disk.checkSync('/').free / 1000000} MB`);
+  console.log(`freespace: ${disk.checkSync('/tmp').free / 1000000} MB`);
   // eslint-disable-next-line
   console.timeEnd('file cleanup duration');
 };
