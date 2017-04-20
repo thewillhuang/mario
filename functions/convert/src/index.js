@@ -48,9 +48,12 @@ export default λ(async (event) => {
   const filePath = `/tmp/${Key}`;
   // eslint-disable-next-line
   // setup phantom
+  // eslint-disable-next-line
+  console.time('spin up phantom duration');
   const instance = await phantom.create();
   const page = await instance.createPage();
-
+  // eslint-disable-next-line
+  console.timeEnd('spin up phantom duration');
   try {
     // sets page property
     Object.keys(pageConfig).forEach(options => page.property(options, pageConfig[options]));
@@ -58,11 +61,12 @@ export default λ(async (event) => {
     // sets content for phantom to render
     page.property('content', template({ html, css: autoprefixed(css), js, cssUrls, jsUrls }));
 
-    console.time('lambda pdf generation duration');
+    // eslint-disable-next-line
+    console.time('generate pdf duration');
     // render the pdf to file path
     await page.render(filePath);
     // eslint-disable-next-line
-    console.timeEnd('lambda pdf generation duration');
+    console.timeEnd('generate pdf duration');
     // eslint-disable-next-line
     console.time('upload pdf to s3 duration');
     const upload = s3.upload({
