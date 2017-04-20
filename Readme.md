@@ -33,3 +33,7 @@ curl -H "Content-Type: application/json" -H "Accept: application/pdf" -X POST -d
   }
 }
 ```
+
+#### Limitations
+- http://docs.aws.amazon.com/lambda/latest/dg/limits.html
+- 2 dashboard charts is around 0.8mb, limit is 6
