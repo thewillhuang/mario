@@ -37,6 +37,7 @@ export default λ(async (event) => {
     cssUrls = [],
     jsUrls = [],
     pageConfig,
+    fileType = 'pdf',
   } = event;
   // eslint-disable-next-line
   console.log(`payload size is ${~-encodeURI(JSON.stringify(event)).split(/%..|./).length / 1000000} MB`);
@@ -44,7 +45,7 @@ export default λ(async (event) => {
   if (ping) { return { message: 'ack' }; }
 
   // lambda only gives write permission on /tmp/
-  const Key = `${uuid()}.pdf`;
+  const Key = `${uuid()}.${fileType}`;
   const filePath = `/tmp/${Key}`;
   // eslint-disable-next-line
   // setup phantom
