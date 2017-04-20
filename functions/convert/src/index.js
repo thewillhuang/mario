@@ -71,6 +71,7 @@ export default λ(async (event) => {
     console.timeEnd('generate pdf duration');
     // eslint-disable-next-line
     console.time('upload pdf to s3 duration');
+
     const upload = s3.upload({
       ACL: 'public-read',
       Bucket: 'mario-pdf-upload',
