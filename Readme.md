@@ -1,4 +1,4 @@
-An Apex Lambda function built using aws codebuild, running native phantom js taking html css and returns an AWS s3 url link for the user to download the files.
+An Apex Lambda function built using aws codebuild, running native phantom js taking html css and returns an signed AWS s3 url link for the user to download the files.
 
 Install NPM dependencies:
 
