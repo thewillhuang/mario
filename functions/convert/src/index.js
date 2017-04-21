@@ -69,7 +69,7 @@ export default λ(async (event) => {
     // eslint-disable-next-line
     console.timeEnd('generate content');
     // eslint-disable-next-line
-    console.time('upload pdf to s3');
+    console.time('upload content to s3');
 
     const params = {
       Bucket: 'mario-pdf-upload',
@@ -83,15 +83,15 @@ export default λ(async (event) => {
 
     await upload.promise();
     // eslint-disable-next-line
-    console.timeEnd('upload pdf to s3');
+    console.timeEnd('upload content to s3');
 
     // clean up
     cleanup(instance, filePath);
     // eslint-disable-next-line
-    console.time('generated signed url');
+    console.time('generate signed url');
     const url = s3.getSignedUrl('getObject', pick(['Bucket', 'Key'], params));
     // eslint-disable-next-line
-    console.timeEnd('generated signed url');
+    console.timeEnd('generate signed url');
     return { url };
   } catch (e) {
     // eslint-disable-next-line
