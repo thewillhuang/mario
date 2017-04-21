@@ -1,6 +1,6 @@
-An Apex Lambda function built using aws codebuild, running native phantom js taking html css and returns a signed AWS s3 url link for the user to download the fil
+An Apex Lambda function built using aws codebuild, running native phantom js taking html css and returns a signed AWS s3 url link for the user to download the files
 
-Install NPM des:
+Install NPM dependencies:
 
 ```
 $ yarn && cd functions/convert && yarn && ../..
