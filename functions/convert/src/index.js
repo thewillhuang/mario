@@ -8,7 +8,6 @@ import zlib from 'zlib';
 import disk from 'diskusage';
 import { pick } from 'ramda';
 
-import autoprefixed from './lib/autoprefix';
 import fs from './lib/fs';
 import template from './lib/template';
 
