@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "babel-core": "^6.24.0",
-    "babel-eslint": "^7.2.1",
+    "babel-eslint": "^7.2.3",
     "babel-loader": "^6.4.1",
     "babel-plugin-ramda": "^1.2.0",
     "babel-plugin-transform-promise-to-bluebird": "^1.1.1",
