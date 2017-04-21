@@ -60,7 +60,7 @@ export default λ(async (event) => {
     Object.keys(pageConfig).forEach(options => page.property(options, pageConfig[options]));
 
     // sets content for phantom to render
-    page.property('content', template({ html, css: autoprefixed(css), js, cssUrls, jsUrls }));
+    page.property('content', template({ html, css, js, cssUrls, jsUrls }));
 
     // eslint-disable-next-line
     console.time('generate content');
