@@ -1,18 +1,6 @@
-export const generateLinkTag = (cssUrl) => {
-  let css = '';
-  cssUrl.forEach((url) => {
-    css += `<link href="${url}" rel="stylesheet">`;
-  });
-  return css;
-};
+export const generateLinkTag = cssUrl => cssUrl.reduce((acc, url) => `${acc}<link href="${url}" rel="stylesheet">`, '');
 
-export const generateScriptTag = (jsUrl) => {
-  let js = '';
-  jsUrl.forEach((url) => {
-    js += `<script src="${url}"></script>`;
-  });
-  return js;
-};
+export const generateScriptTag = jsUrl => jsUrl.reduce((acc, url) => `${acc}<script src="${url}"></script>`, '');
 
 export const isPromise = value => value && typeof value.then === 'function';
 
