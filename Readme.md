@@ -1,4 +1,4 @@
-An Apex Lambda function built using aws codebuild, running native phantom js taking html css and returns an signed AWS s3 url link for the user to download the files.
+An Apex Lambda function built using aws codebuild, running native phantom js taking html css and returns a signed AWS s3 url link for the user to download the files
 
 Install NPM dependencies:
 
@@ -6,8 +6,9 @@ Install NPM dependencies:
 $ yarn && cd functions/convert && yarn && ../..
 ```
 
-Deploy the functions:
+Setup Apex, see https://github.com/apex/apex/tree/master/_examples/babel-webpack2
 
+Deploy the functions:
 ```
 $ apex deploy
 ```
