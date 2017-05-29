@@ -32,6 +32,7 @@
     "webpack": "^2.6.1"
   },
   "scripts": {
-    "nuke": "find . -type d -name node_modules -exec rm -fr {} + && rm -fr o.zip .DS_Store && yarn "
+    "nuke": "find . -type d -name node_modules -exec rm -fr {} + && rm -fr o.zip .DS_Store && yarn ",
+    "postinstall": "find ./functions/* -name package.json -maxdepth 2 -execdir ~/.yarn/bin/yarn \\;"
   }
 }
