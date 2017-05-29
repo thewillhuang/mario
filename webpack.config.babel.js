@@ -1,7 +1,6 @@
 // NOTE: paths are relative to each functions folder
 import webpack from 'webpack';
 import path from 'path';
-import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
 
 export default {
   entry: ['./src/index.js'],
@@ -35,6 +34,8 @@ export default {
         NODE_ENV: JSON.stringify('production'),
       },
     }),
-    new UglifyJSPlugin({}),
+    new webpack.optimize.UglifyJsPlugin({
+      output: { comments: false },
+    }),
   ],
 };
