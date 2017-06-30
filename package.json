@@ -11,7 +11,7 @@
     "aws-sdk": "^2.66.0",
     "content-disposition": "^0.5.2",
     "mime": "^1.3.6",
-    "postcss": "^6.0.1",
+    "postcss": "^6.0.4",
     "ramda": "^0.24.1",
     "uuid": "^3.0.1"
   },
