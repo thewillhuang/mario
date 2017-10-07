@@ -1,5 +1,9 @@
+// read s3 object from src bucket
+// grab html + css content
+// upload to destination bucket pre gzipped for binder
+
 import λ from 'apex.js';
-import phantom from 'phantom';
+import puppeteer from 'puppeteer';
 import { v4 as uuid } from 'uuid';
 import { S3, config } from 'aws-sdk';
 import mime from 'mime';
