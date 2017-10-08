@@ -16,7 +16,7 @@ export const uploadToS3 = async (Bucket, Key, Body) => {
   };
   const upload = s3.upload(params);
 
-  await upload.promise();
+  return upload.promise();
 };
 
 export const getFromS3 = (Bucket, Key) => {
