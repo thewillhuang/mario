@@ -16,10 +16,10 @@ export default λ(async ({ Records }) => {
   console.time('generate pdf');
   let pdfBuffer;
   if (browser) {
-    pdfBuffer = generatePdfWithRawContent(html, css);
+    pdfBuffer = generatePdfWithRawContent(browser, html, css);
   } else {
     browser = await puppeteer.launch();
-    pdfBuffer = generatePdfWithRawContent(html, css);
+    pdfBuffer = generatePdfWithRawContent(browser, html, css);
   }
   console.timeEnd('generate pdf');
 
