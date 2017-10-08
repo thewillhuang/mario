@@ -6,6 +6,15 @@ export default λ(async ({ Records }) => {
   const { s3: { object: { key }, bucket: { name: srcBucket } } } = Records[0];
   const destBucket = `${srcBucket}-pdf`;
 
+  console.time('grab content from s3');
   const { html, css } = await getFromS3(srcBucket, key);
-  uploadToS3(destBucket, key, generatePdfWithRawContent(html, css));
+  console.timeEnd('grab content from s3');
+
+  console.time('generate pdf');
+  const pdfBuffer = generatePdfWithRawContent(html, css);
+  console.timeEnd('generate pdf');
+
+  console.time('upload pdf to destination bucket');
+  uploadToS3(destBucket, key, pdfBuffer);
+  console.timeEnd('upload pdf to destination bucket');
 });
