@@ -1,6 +1,9 @@
 import λ from 'apex.js';
+import puppeteer from 'puppeteer';
 import { generatePdfWithRawContent } from './lib/generate';
 import { getFromS3, uploadToS3 } from './lib/s3Helpers';
+
+let browser;
 
 export default λ(async ({ Records }) => {
   const { s3: { object: { key }, bucket: { name: srcBucket } } } = Records[0];
@@ -11,10 +14,16 @@ export default λ(async ({ Records }) => {
   console.timeEnd('grab content from s3');
 
   console.time('generate pdf');
-  const pdfBuffer = generatePdfWithRawContent(html, css);
+  let pdfBuffer;
+  if (browser) {
+    pdfBuffer = generatePdfWithRawContent(html, css);
+  } else {
+    browser = await puppeteer.launch();
+    pdfBuffer = generatePdfWithRawContent(html, css);
+  }
   console.timeEnd('generate pdf');
 
-  console.time('upload pdf to destination bucket');
+  console.timeEnd('upload pdf to destination bucket');
   uploadToS3(destBucket, key, pdfBuffer);
   console.timeEnd('upload pdf to destination bucket');
 });
