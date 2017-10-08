@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "diskusage": "^0.2.1",
-    "phantom": "3"
+    "puppeteer": "^0.11.0"
   }
 }
