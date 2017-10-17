@@ -18,6 +18,6 @@ phases:
   #   commands:
   #     - npm run publish
   #     - apex deploy
-# artifacts:
-#   files:
-#     - build/**/*
+artifacts:
+  files:
+    - functions/convert/**/*
