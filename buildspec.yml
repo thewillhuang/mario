@@ -3,9 +3,10 @@ version: 0.1
 phases:
   install:
     commands:
-      - curl -o- -L https://yarnpkg.com/install.sh | bash
+      # - curl -o- -L https://yarnpkg.com/install.sh | bash
       - curl https://raw.githubusercontent.com/apex/apex/master/install.sh | sh
-      - ~/.yarn/bin/yarn
+      - npm install
+      # - ~/.yarn/bin/yarn
   # pre_build:
   #   commands:
   #     - echo Nothing to do in the pre_build phase...

@@ -30,6 +30,6 @@
   },
   "scripts": {
     "nuke": "find . -type d -name node_modules -exec rm -fr {} + && rm -fr o.zip .DS_Store",
-    "postinstall": "find ./functions/* -name package.json -maxdepth 2 -execdir ~/.yarn/bin/yarn build \\;"
+    "postinstall": "find ./functions/* -name package.json -maxdepth 2 -execdir npm run build \\;"
   }
 }
