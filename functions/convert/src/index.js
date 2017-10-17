@@ -1,5 +1,5 @@
 import λ from 'apex.js';
-import puppeteer from 'puppeteer';
+import { getBrowser } from './lib/setup';
 import { generatePdfWithRawContent } from './lib/generate';
 import { getFromS3, uploadToS3 } from './lib/s3Helpers';
 
@@ -17,7 +17,7 @@ export default λ(async ({ Records }) => {
   if (browser) {
     pdfBuffer = generatePdfWithRawContent(browser, html, css);
   } else {
-    browser = await puppeteer.launch();
+    browser = await getBrowser();
     pdfBuffer = generatePdfWithRawContent(browser, html, css);
   }
   console.timeEnd('generate pdf');
