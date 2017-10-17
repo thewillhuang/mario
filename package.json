@@ -29,7 +29,6 @@
     "webpack": "^3.3.0"
   },
   "scripts": {
-    "nuke": "find . -type d -name node_modules -exec rm -fr {} + && rm -fr o.zip .DS_Store",
-    "postinstall": "cd ./functions/convert && export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1 && npm install"
+    "nuke": "find . -type d -name node_modules -exec rm -fr {} + && rm -fr o.zip .DS_Store"
   }
 }
