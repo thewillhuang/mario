@@ -10,7 +10,7 @@ export default {
     filename: 'index.js',
     libraryTarget: 'commonjs2',
   },
-  externals: ['aws-sdk', 'puppeteer'],
+  externals: ['aws-sdk'],
   module: {
     rules: [
       {
