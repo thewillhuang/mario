@@ -30,6 +30,6 @@
   },
   "scripts": {
     "nuke": "find . -type d -name node_modules -exec rm -fr {} + && rm -fr o.zip .DS_Store",
-    "postinstall": "cd ./functions/convert && PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1 && npm install"
+    "postinstall": "cd ./functions/convert && PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1 npm install"
   }
 }
