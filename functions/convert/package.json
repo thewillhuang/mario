@@ -4,12 +4,12 @@
   "description": "native modules required by lambda",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1 ~/.yarn/bin/yarn"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "diskusage": "^0.2.1",
-    "phantom": "3"
+    "puppeteer": "^0.11.0"
   }
 }
