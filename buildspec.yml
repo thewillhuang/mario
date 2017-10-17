@@ -14,10 +14,11 @@ phases:
   build:
     commands:
       - apex deploy
+      - apex build convert > ./o.zip
   # post_build:
   #   commands:
   #     - npm run publish
   #     - apex deploy
 artifacts:
   files:
-    - functions/convert/**/*
+    - o.zip
