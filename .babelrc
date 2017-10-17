@@ -2,8 +2,8 @@
   "presets": [
     ["env", {
       "targets": {
-        "node": "6.31",
-        "uglify": true
+        "node": "4",
+        "forceAllTransforms": true
       }
     }]
   ],
