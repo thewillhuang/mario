@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1 ~/.yarn/bin/yarn"
+    "build": "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1 && npm i"
   },
   "author": "",
   "license": "ISC",
