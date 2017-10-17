@@ -2,7 +2,6 @@
   "presets": [
     ["env", {
       "targets": {
-        "node": "4",
         "forceAllTransforms": true
       }
     }]
