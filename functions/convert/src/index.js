@@ -9,16 +9,16 @@ export default λ(async ({ Records }) => {
   const destBucket = `${srcBucket}-pdf`;
 
   console.time('grab content from s3');
-  const { html, css } = JSON.parse(await getFromS3(srcBucket, key));
+  const content = JSON.parse(await getFromS3(srcBucket, key));
   console.timeEnd('grab content from s3');
 
   console.time('generate pdf');
   let pdfBuffer;
   if (browser) {
-    pdfBuffer = generatePdfWithRawContent(browser, html, css);
+    pdfBuffer = generatePdfWithRawContent(browser, content);
   } else {
     browser = await getBrowser();
-    pdfBuffer = generatePdfWithRawContent(browser, html, css);
+    pdfBuffer = generatePdfWithRawContent(browser, content);
   }
   console.timeEnd('generate pdf');
 

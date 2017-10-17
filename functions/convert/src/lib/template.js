@@ -1,5 +1,5 @@
-export default ({ html, css }) =>
-  `<!DOCTYPE html>
+export default ({ html, css, content }) =>
+  content ? content : `<!DOCTYPE html>
   <html lang="en">
   <head>
     <meta charset="UTF-8">
