@@ -30,6 +30,6 @@
   },
   "scripts": {
     "nuke": "find . -type d -name node_modules -exec rm -fr {} + && rm -fr o.zip .DS_Store",
-    "postinstall": "find ./functions/* -name package.json -maxdepth 2 -execdir npm install \\;"
+    "postinstall": "cd ./functions/convert && npm install"
   }
 }
