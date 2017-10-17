@@ -1,6 +1,6 @@
-const index = require('../index');
-const { DEBUG } = require('./config');
-const puppeteer = require('puppeteer');
+import puppeteer from 'puppeteer';
+import { run } from '../index';
+import { DEBUG } from './config';
 
 (async () => {
   const browser = await puppeteer.launch({
@@ -9,7 +9,7 @@ const puppeteer = require('puppeteer');
     dumpio: !!DEBUG,
         // use chrome installed by puppeteer
   });
-  await index.run(browser)
+  await run(browser)
     .then(result => console.log(result))
     .catch(err => console.error(err));
   await browser.close();

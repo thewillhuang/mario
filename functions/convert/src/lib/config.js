@@ -1,4 +1,4 @@
-const path = require('path');
+import path from 'path';
 
 export const launchOptionForLambda = [
     // error when launch(); No usable sandbox! Update your kernel

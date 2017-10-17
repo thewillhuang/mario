@@ -1,5 +1,5 @@
 import λ from 'apex.js';
-import { getBrowser } from './lib/setup';
+import getBrowser from './lib/setup';
 import { generatePdfWithRawContent } from './lib/generate';
 import { getFromS3, uploadToS3 } from './lib/s3Helpers';
 
