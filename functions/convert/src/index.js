@@ -17,10 +17,10 @@ export default λ(async ({ Records }) => {
   let pdfBuffer;
   const content = Body.toString('utf-8');
   if (browser) {
-    pdfBuffer = generatePdfWithRawContent(browser, content);
+    pdfBuffer = await generatePdfWithRawContent(browser, content);
   } else {
     browser = await getBrowser();
-    pdfBuffer = generatePdfWithRawContent(browser, content);
+    pdfBuffer = await generatePdfWithRawContent(browser, content);
   }
   console.timeEnd('generate pdf');
 
