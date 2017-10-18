@@ -31,8 +31,8 @@ export default {
         NODE_ENV: JSON.stringify('production'),
       },
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      output: { comments: false },
-    }),
+    // new webpack.optimize.UglifyJsPlugin({
+    //   output: { comments: false },
+    // }),
   ],
 };
