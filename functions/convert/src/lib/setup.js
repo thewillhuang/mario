@@ -41,6 +41,28 @@ const setupS3Chrome = () => new Promise((resolve, reject) => {
     .on('end', () => resolve());
 });
 
+const isBrowserAvailable = async (browser) => {
+  try {
+    await browser.version();
+  } catch (e) {
+    debugLog(e); // not opened etc.
+    return false;
+  }
+  return true;
+};
+
+const existsLocalChrome = () => new Promise((resolve, reject) => {
+  fs.exists(localChromePath, (exists) => {
+    resolve(exists);
+  });
+});
+
+const existsExecutableChrome = () => new Promise((resolve, reject) => {
+  fs.exists(executablePath, (exists) => {
+    resolve(exists);
+  });
+});
+
 const setupChrome = async () => {
   if (!await existsExecutableChrome()) {
     if (await existsLocalChrome()) {
@@ -53,17 +75,6 @@ const setupChrome = async () => {
     debugLog('setup done');
   }
 };
-
-const isBrowserAvailable = async (browser) => {
-  try {
-    await browser.version();
-  } catch (e) {
-    debugLog(e); // not opened etc.
-    return false;
-  }
-  return true;
-};
-
 
 const getBrowser = (() => {
   let browser;
@@ -81,17 +92,5 @@ const getBrowser = (() => {
     return browser;
   };
 })();
-
-const existsLocalChrome = () => new Promise((resolve, reject) => {
-  fs.exists(localChromePath, (exists) => {
-    resolve(exists);
-  });
-});
-
-const existsExecutableChrome = () => new Promise((resolve, reject) => {
-  fs.exists(executablePath, (exists) => {
-    resolve(exists);
-  });
-});
 
 export default getBrowser;
