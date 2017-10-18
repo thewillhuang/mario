@@ -3,11 +3,11 @@ version: 0.1
 phases:
   install:
     commands:
-      # - curl -o- -L https://yarnpkg.com/install.sh | bash
+      - curl -o- -L https://yarnpkg.com/install.sh | bash
       - curl https://raw.githubusercontent.com/apex/apex/master/install.sh | sh
-      - npm install
-      - cd ./functions/convert && export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1 && npm install
-      # - ~/.yarn/bin/yarn
+      # - npm install
+      - ~/.yarn/bin/yarn
+      - cd ./functions/convert && export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1 && ~/.yarn/bin/yarn
   # pre_build:
   #   commands:
   #     - echo Nothing to do in the pre_build phase...
