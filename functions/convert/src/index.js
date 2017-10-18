@@ -5,6 +5,7 @@ import { getFromS3, uploadToS3 } from './lib/s3Helpers';
 
 let browser;
 export default λ(async ({ Records }) => {
+  console.log('loaded function');
   const { s3: { object: { key }, bucket: { name: srcBucket } } } = Records[0];
   const destBucket = `${srcBucket}-pdf`;
 
