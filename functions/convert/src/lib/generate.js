@@ -23,4 +23,4 @@ export const generatePdfWithUrl = (browser, url) => new Promise(async (resolve, 
   } catch (e) {
     reject(e);
   }
-};
+});
