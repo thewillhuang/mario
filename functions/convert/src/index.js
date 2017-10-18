@@ -1,5 +1,5 @@
 import λ from 'apex.js';
-// import getBrowser from './lib/setup';
+import getBrowser from './lib/setup';
 // import { generatePdfWithRawContent } from './lib/generate';
 // import { getFromS3, uploadToS3 } from './lib/s3Helpers';
 
@@ -10,6 +10,8 @@ export default λ(async ({ Records }) => {
   const destBucket = `${srcBucket}-pdf`;
 
   console.log('key src bucket', key, srcBucket, destBucket);
+
+  console.log(browser, getBrowser);
 
   // console.time('grab content from s3');
   // const content = JSON.parse(await getFromS3(srcBucket, key));
