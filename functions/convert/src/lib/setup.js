@@ -77,6 +77,7 @@ const setupChrome = async () => {
 };
 
 const getBrowser = (() => {
+  console.log('called getBrowser');
   let browser;
   return async () => {
     if (typeof browser === 'undefined' || !await isBrowserAvailable(browser)) {
