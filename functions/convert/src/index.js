@@ -17,6 +17,8 @@ export default λ(async ({ Records }) => {
   let pdfBuffer;
   const content = Body.toString('utf-8');
   if (browser) {
+    console.log('calling generatePdfWithRawContent');
+    console.log(generatePdfWithRawContent());
     pdfBuffer = await generatePdfWithRawContent(browser, content);
   } else {
     browser = await getBrowser();
