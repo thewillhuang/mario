@@ -4,16 +4,14 @@ import { generatePdfWithRawContent } from './lib/generate';
 import { getFromS3, uploadToS3 } from './lib/s3Helpers';
 
 let browser;
-export default λ(async (event) => {
-  console.log(event);
-  const { Records } = event;
-  console.log(Records);
+export default λ(async ({ Records }) => {
   const { s3: { object: { key }, bucket: { name: srcBucket } } } = Records[0];
   console.log(key, srcBucket);
   const destBucket = `${srcBucket}-processed`;
 
   console.time('grab content from s3');
-  const content = JSON.parse(await getFromS3(srcBucket, key));
+  const content = await getFromS3(srcBucket, key);
+  console.log(content);
   console.timeEnd('grab content from s3');
 
   console.time('generate pdf');
