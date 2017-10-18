@@ -7,6 +7,7 @@ let browser;
 export default λ(async (event) => {
   console.log(event);
   const { Records } = event;
+  console.log(Records);
   const { s3: { object: { key }, bucket: { name: srcBucket } } } = Records[0];
   console.log(key, srcBucket);
   const destBucket = `${srcBucket}-processed`;
