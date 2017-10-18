@@ -11,7 +11,6 @@ export default λ(async ({ Records }) => {
 
   console.time('grab content from s3');
   const { Body } = await getFromS3(srcBucket, key);
-  console.log(Body.toString('utf-8'));
   console.timeEnd('grab content from s3');
 
   console.time('generate pdf');
