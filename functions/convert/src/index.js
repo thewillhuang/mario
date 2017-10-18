@@ -10,12 +10,13 @@ export default λ(async ({ Records }) => {
   const destBucket = `${srcBucket}-processed`;
 
   console.time('grab content from s3');
-  const content = await getFromS3(srcBucket, key);
-  console.log(content);
+  const { Body } = await getFromS3(srcBucket, key);
+  console.log(Body.toString('utf-8'));
   console.timeEnd('grab content from s3');
 
   console.time('generate pdf');
   let pdfBuffer;
+  const content = Body.toString('utf-8');
   if (browser) {
     pdfBuffer = generatePdfWithRawContent(browser, content);
   } else {
