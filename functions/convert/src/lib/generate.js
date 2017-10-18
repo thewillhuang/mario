@@ -1,9 +1,11 @@
 import template from './template';
 
-export const generatePdfWithRawContent = async (browser, html, css) => {
+export const generatePdfWithRawContent = async (browser, content) => {
+  console.log('generating raw content');
   const page = await browser.newPage();
-  page.setContent(template({ html, css }));
+  page.setContent(template({ content }));
   const pdf = await page.pdf({ format: 'A4', landscape: true });
+  console.log(pdf);
   await page.close();
   return pdf;
 };
