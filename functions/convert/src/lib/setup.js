@@ -66,12 +66,15 @@ const existsExecutableChrome = () => new Promise((resolve, reject) => {
 const setupChrome = async () => {
   if (!await existsExecutableChrome()) {
     if (await existsLocalChrome()) {
+      console.log('setup local chrome');
       debugLog('setup local chrome');
       await setupLocalChrome();
     } else {
+      console.log('setup s3 chrome');
       debugLog('setup s3 chrome');
       await setupS3Chrome();
     }
+    console.log('setup done');
     debugLog('setup done');
   }
 };
