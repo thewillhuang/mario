@@ -16,9 +16,10 @@ export default λ(async ({ Records }) => {
   const content = Body.toString('utf-8');
   const browser = await getBrowser();
   const pdfBuffer = await generatePdfWithRawContent(browser, content);
+  console.log(pdfBuffer);
   console.timeEnd('generate pdf');
 
-  console.timeEnd('upload pdf to destination bucket');
-  await uploadToS3(destBucket, key, pdfBuffer);
-  console.timeEnd('upload pdf to destination bucket');
+  // console.timeEnd('upload pdf to destination bucket');
+  // await uploadToS3(destBucket, key, pdfBuffer);
+  // console.timeEnd('upload pdf to destination bucket');
 });
