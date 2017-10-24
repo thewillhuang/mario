@@ -19,4 +19,4 @@ export const executablePath = path.join(
     'headless_shell',
 );
 
-export const DEBUG = process.env.DEBUG;
+export const DEBUG = true;

@@ -2,7 +2,7 @@ import aws from 'aws-sdk';
 import fs from 'fs';
 import tar from 'tar';
 import puppeteer from 'puppeteer';
-import { executablePath, setupChromePath, remoteChromeS3Key, remoteChromeS3Bucket, launchOptionForLambda, localChromePath, DEBUG } from './config';
+import { executablePath, setupChromePath as cwd, remoteChromeS3Key, remoteChromeS3Bucket, launchOptionForLambda, localChromePath, DEBUG } from './config';
 
 const s3 = new aws.S3({ apiVersion: '2006-03-01' });
 
@@ -19,18 +19,11 @@ const debugLog = (log) => {
 const setupLocalChrome = () => new Promise((resolve, reject) => {
   fs.createReadStream(localChromePath)
     .on('error', err => reject(err))
-    .pipe(tar.x({
-      C: setupChromePath,
+    .pipe(tar.extract({
+      cwd,
     }))
     .on('error', err => reject(err))
     .on('end', () => resolve());
-  fs.readdir(setupChromePath, (err, items) => {
-    console.log(items);
-
-    for (let i = 0; i < items.length; i++) {
-      console.log(items[i]);
-    }
-  });
 });
 
 const setupS3Chrome = () => new Promise((resolve, reject) => {
@@ -41,8 +34,8 @@ const setupS3Chrome = () => new Promise((resolve, reject) => {
   s3.getObject(params)
     .createReadStream()
     .on('error', err => reject(err))
-    .pipe(tar.x({
-      C: setupChromePath,
+    .pipe(tar.extract({
+      cwd,
     }))
     .on('error', err => reject(err))
     .on('end', () => resolve());
