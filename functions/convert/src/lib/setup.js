@@ -15,19 +15,25 @@ export const setupLocalChrome = () => new Promise((resolve, reject) => {
 });
 
 const getBrowser = async (browser) => {
-  if (typeof browser !== 'undefined') {
-    return browser;
+  try {
+    if (typeof browser !== 'undefined') {
+      return browser;
+    }
+    if (await setupLocalChrome()) {
+      return await puppeteer.launch({
+        headless: true,
+        executablePath,
+        args: launchOptionForLambda,
+        dumpio: !!exports.DEBUG,
+      });
+    }
+    console.log('failed to create browser');
+    return false;
+  } catch (e) {
+    console.log(e);
+    console.log('failed to create browser');
+    return false;
   }
-  if (await setupLocalChrome()) {
-    const newBrowser = await puppeteer.launch({
-      headless: true,
-      executablePath,
-      args: launchOptionForLambda,
-      dumpio: !!exports.DEBUG,
-    });
-    return newBrowser;
-  }
-  console.log('failed to create browser');
 };
 
 export default getBrowser;
