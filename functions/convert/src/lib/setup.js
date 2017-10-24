@@ -4,32 +4,24 @@ import puppeteer from 'puppeteer';
 import fs from 'fs';
 import path from 'path';
 
-const setupLocalChrome = () => {
-  fs.createReadStream(path.join(process.cwd(), './HeadlessChrome-63.0.3213.0.tar.gz'))
+const setupLocalChrome = () => new Promise((resolve, reject) => {
+  fs.createReadStream(path.join(process.cwd(), './headless_shell.tar.gz'))
+    .on('error', err => reject(err))
     .pipe(gunzip())
+    .on('error', err => reject(err))
     .pipe(tar.extract('/tmp'))
-    .on('finish', () => {
-      console.log(fs.readdirSync('/tmp'));
-      console.log('headless shell', fs.existsSync('/tmp/headless_shell'));
-    });
-};
-
-// const setupLocalChrome = () => new Promise((resolve, reject) => {
-//   fs.createReadStream(path.join(process.cwd(), './headless_shell.tar.gz'))
-//     .on('error', err => reject(err))
-//     .pipe(tar.x({
-//       C: path.join(path.sep, 'tmp'),
-//     }))
-//     .on('error', err => reject(err))
-//     .on('end', () => resolve());
-// });
+    .on('error', err => reject(err))
+    .on('end', () => resolve());
+});
 
 const getBrowser = async (browser) => {
   try {
     if (browser !== false) {
       return browser;
     }
-    setupLocalChrome();
+    await setupLocalChrome();
+    console.log('tmp dir', fs.readdirSync('/tmp'));
+    console.log('headless shell', fs.existsSync('/tmp/headless_shell'));
     return await puppeteer.launch({
       headless: true,
       executablePath: path.join(__dirname, '/tmp/headless_shell'),
