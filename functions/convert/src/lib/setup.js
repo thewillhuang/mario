@@ -52,12 +52,14 @@ const isBrowserAvailable = async (browser) => {
 
 const existsLocalChrome = () => new Promise((resolve, reject) => {
   fs.exists(localChromePath, (exists) => {
+    console.log(exists);
     resolve(exists);
   });
 });
 
 const existsExecutableChrome = () => new Promise((resolve, reject) => {
   fs.exists(executablePath, (exists) => {
+    console.log(exists);
     resolve(exists);
   });
 });
