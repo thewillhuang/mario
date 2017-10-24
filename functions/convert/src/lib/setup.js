@@ -7,9 +7,9 @@ import path from 'path';
 const setupLocalChrome = () => {
   fs.createReadStream(path.join(process.cwd(), './headless_shell.tar.gz'))
     .pipe(gunzip())
-    .pipe(tar.extract(path.join(__dirname, '/tmp')));
-  console.log(path.join(__dirname, '/tmp/'));
-  console.log(fs.readdirSync(path.join(__dirname, '/tmp/')));
+    .pipe(tar.extract(path.join(__dirname, './tmp')));
+  console.log(path.join(__dirname, './tmp'));
+  console.log(fs.readdirSync(path.join(__dirname, './tmp/')));
 };
 
 const getBrowser = async (browser) => {
