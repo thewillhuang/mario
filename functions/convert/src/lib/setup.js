@@ -7,8 +7,9 @@ import path from 'path';
 const setupLocalChrome = () => {
   fs.createReadStream(path.join(process.cwd(), './headless_shell.tar.gz'))
     .pipe(gunzip())
-    .pipe(tar.extract('/tmp/'));
+    .pipe(tar.extract('/tmp'));
   console.log(fs.readdirSync('/tmp'));
+  console.log('headless shell', fs.existsSync('/tmp/headless_shell'));
 };
 
 // const setupLocalChrome = () => new Promise((resolve, reject) => {
