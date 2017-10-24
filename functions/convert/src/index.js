@@ -3,7 +3,7 @@ import getBrowser from './lib/setup';
 import { generatePdfWithRawContent } from './lib/generate';
 import { getFromS3, uploadToS3 } from './lib/s3Helpers';
 
-let browser;
+let browser = false;
 
 export default λ(async ({ Records }) => {
   const { s3: { object: { key }, bucket: { name: srcBucket } } } = Records[0];
