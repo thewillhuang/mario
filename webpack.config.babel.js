@@ -10,7 +10,7 @@ export default {
     filename: 'index.js',
     libraryTarget: 'commonjs2',
   },
-  externals: ['aws-sdk', 'puppeteer', 'gunzip-maybe', 'tar-fs'],
+  externals: ['aws-sdk', 'puppeteer', 'gunzip-maybe', 'tar-fs', 'tar'],
   module: {
     rules: [
       {
