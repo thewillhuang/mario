@@ -2,7 +2,7 @@ import aws from 'aws-sdk';
 import gunzip from 'gunzip-maybe';
 import tar from 'tar-fs';
 import puppeteer from 'puppeteer';
-import fs from './fs';
+import fs from 'fs';
 import { executablePath, setupChromePath, remoteChromeS3Key, remoteChromeS3Bucket, launchOptionForLambda, localChromePath, DEBUG } from './config';
 
 const s3 = new aws.S3({ apiVersion: '2006-03-01' });
