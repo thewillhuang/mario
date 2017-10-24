@@ -26,20 +26,6 @@ const setupLocalChrome = () => new Promise((resolve, reject) => {
     .on('end', () => resolve());
 });
 
-const setupS3Chrome = () => new Promise((resolve, reject) => {
-  const params = {
-    Bucket: remoteChromeS3Bucket,
-    Key: remoteChromeS3Key,
-  };
-  s3.getObject(params)
-    .createReadStream()
-    .on('error', err => reject(err))
-    .pipe(gunzip())
-    .pipe(tar.extract(setupChromePath))
-    .on('error', err => reject(err))
-    .on('end', () => resolve());
-});
-
 const isBrowserAvailable = async (browser) => {
   try {
     await browser.version();
@@ -50,31 +36,11 @@ const isBrowserAvailable = async (browser) => {
   return true;
 };
 
-const setupChrome = async () => {
-  try {
-    if (!fs.existsSync(executablePath)) {
-      if (!fs.existsSync(localChromePath)) {
-        debugLog('setup local chrome');
-        console.log(executablePath);
-        await setupLocalChrome();
-        console.log('files inside temp?', fs.existsSync(executablePath));
-      } else {
-        debugLog('setup s3 chrome');
-        await setupS3Chrome();
-      }
-      debugLog('setup done');
-    }
-  } catch (e) {
-    console.log('setup chrome failed');
-    console.log(e);
-  }
-};
-
 const getBrowser = (() => {
   let browser;
   return async () => {
     if (typeof browser === 'undefined' || !await isBrowserAvailable(browser)) {
-      await setupChrome();
+      await setupLocalChrome();
       browser = await puppeteer.launch({
         headless: true,
         executablePath,
