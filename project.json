@@ -7,7 +7,7 @@
   "runtime": "nodejs6.10",
   "handler": "dist.default",
   "hooks": {
-    "build": "../../node_modules/.bin/webpack --config ../../webpack.config.babel.js --bail && cp ../../headless_shell.tar.gz dist && cp ../../HeadlessChrome-63.0.3213.0.tar.gz dist",
+    "build": "../../node_modules/.bin/webpack --config ../../webpack.config.babel.js --bail",
     "clean": "rm -fr dist"
   },
   "environment": {}
