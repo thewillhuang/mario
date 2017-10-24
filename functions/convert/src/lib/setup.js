@@ -16,12 +16,11 @@ export const setupLocalChrome = () => new Promise((resolve, reject) => {
 
 export const isBrowserAvailable = async (browser) => {
   try {
-    await browser.version();
+    const version = browser && await browser.version();
+    return version;
   } catch (e) {
-    console.log(e);
     return false;
   }
-  return true;
 };
 
 const getBrowser = async (browser) => {
