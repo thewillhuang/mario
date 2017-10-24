@@ -29,6 +29,7 @@ const getBrowser = (() => {
   return async () => {
     try {
       if (typeof browser === 'undefined' || !await isBrowserAvailable(browser)) {
+        console.log('no browser detected');
         await setupLocalChrome();
         browser = await puppeteer.launch({
           headless: true,
