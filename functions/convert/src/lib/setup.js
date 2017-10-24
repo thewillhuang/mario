@@ -1,5 +1,5 @@
 import gunzip from 'gunzip-maybe';
-import tar from 'tar-fs';
+import tar from 'tar';
 import puppeteer from 'puppeteer';
 import fs from 'fs';
 import path from 'path';
