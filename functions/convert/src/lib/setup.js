@@ -50,26 +50,10 @@ const isBrowserAvailable = async (browser) => {
   return true;
 };
 
-const existsLocalChrome = async () => {
-  try {
-    return await fs.existsAsync(localChromePath);
-  } catch (e) {
-    return false;
-  }
-};
-
-const existsExecutableChrome = async () => {
-  try {
-    return await fs.existsAsync(executablePath);
-  } catch (e) {
-    return false;
-  }
-};
-
 const setupChrome = async () => {
   try {
-    if (!await existsExecutableChrome()) {
-      if (await existsLocalChrome()) {
+    if (!fs.existsSync(executablePath)) {
+      if (!fs.existsSync(localChromePath)) {
         debugLog('setup local chrome');
         console.log(executablePath);
         console.log('files inside temp?', fs.existsSync(executablePath));
