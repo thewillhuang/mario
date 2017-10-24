@@ -1,4 +1,3 @@
-import aws from 'aws-sdk';
 import gunzip from 'gunzip-maybe';
 import tar from 'tar-fs';
 import puppeteer from 'puppeteer';
@@ -28,11 +27,11 @@ const getBrowser = async (browser) => {
       });
     }
     console.log('failed to create browser');
-    return false;
+    return undefined;
   } catch (e) {
     console.log(e);
     console.log('failed to create browser');
-    return false;
+    return undefined;
   }
 };
 
