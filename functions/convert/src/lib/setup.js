@@ -39,17 +39,21 @@ const isBrowserAvailable = async (browser) => {
 const getBrowser = (() => {
   let browser;
   return async () => {
-    if (typeof browser === 'undefined' || !await isBrowserAvailable(browser)) {
-      await setupLocalChrome();
-      browser = await puppeteer.launch({
-        headless: true,
-        executablePath,
-        args: launchOptionForLambda,
-        dumpio: !!exports.DEBUG,
-      });
-      debugLog(async b => `launch done: ${await browser.version()}`);
+    try {
+      if (typeof browser === 'undefined' || !await isBrowserAvailable(browser)) {
+        await setupLocalChrome();
+        browser = await puppeteer.launch({
+          headless: true,
+          executablePath,
+          args: launchOptionForLambda,
+          dumpio: !!exports.DEBUG,
+        });
+        debugLog(async b => `launch done: ${await browser.version()}`);
+      }
+      return browser;
+    } catch (e) {
+      return e;
     }
-    return browser;
   };
 })();
 
