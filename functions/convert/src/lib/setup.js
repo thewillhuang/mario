@@ -5,11 +5,11 @@ import fs from 'fs';
 import path from 'path';
 
 const setupLocalChrome = () => {
-  console.log('cwd', process.cwd());
-  console.log('ls cwd', fs.readdirSync(process.cwd()));
   fs.createReadStream(path.join(process.cwd(), './headless_shell.tar.gz'))
     .pipe(gunzip())
-    .pipe(tar.extract('/tmp'));
+    .pipe(tar.extract(path.join(__dirname, '/tmp')));
+  console.log(path.join(__dirname, '/tmp/'));
+  console.log(fs.readdirSync(path.join(__dirname, '/tmp/')));
 };
 
 const getBrowser = async (browser) => {
@@ -20,7 +20,7 @@ const getBrowser = async (browser) => {
     setupLocalChrome();
     return await puppeteer.launch({
       headless: true,
-      executablePath: '/tmp/headless_shell',
+      executablePath: path.join(__dirname, '/tmp/headless_shell'),
       args: [
         // error when launch(); No usable sandbox! Update your kernel
         '--no-sandbox',
