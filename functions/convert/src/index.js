@@ -5,9 +5,8 @@ import { getFromS3, uploadToS3 } from './lib/s3Helpers';
 
 export default λ(async ({ Records }) => {
   const { s3: { object: { key }, bucket: { name: srcBucket } } } = Records[0];
-  console.log(key, srcBucket);
-  console.log('cwd', process.cwd());
   const destBucket = `${srcBucket}-processed`;
+  console.log(key, srcBucket, destBucket);
 
   console.time('grab content from s3');
   const { Body } = await getFromS3(srcBucket, key);
@@ -17,7 +16,6 @@ export default λ(async ({ Records }) => {
   const content = Body.toString('utf-8');
   const browser = await getBrowser();
   const pdfBuffer = await generatePdfWithRawContent(browser, content);
-  console.log(pdfBuffer);
   console.timeEnd('generate pdf');
 
   console.timeEnd('upload pdf to destination bucket');

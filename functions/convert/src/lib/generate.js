@@ -10,6 +10,7 @@ export const generatePdfWithRawContent = async (browser, content) => {
     return pdf;
   } catch (e) {
     console.log('generatePdfWithRawContent error', e);
+    return e;
   }
 };
 
@@ -22,5 +23,6 @@ export const generatePdfWithUrl = async (browser, url) => {
     return pdf;
   } catch (e) {
     console.log('generatePdfWithUrl error', e);
+    return e;
   }
 };
