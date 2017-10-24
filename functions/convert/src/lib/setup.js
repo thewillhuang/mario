@@ -1,8 +1,8 @@
 import aws from 'aws-sdk';
-import fs from 'fs';
 import gunzip from 'gunzip-maybe';
 import tar from 'tar-fs';
 import puppeteer from 'puppeteer';
+import fs from './fs';
 import { executablePath, setupChromePath, remoteChromeS3Key, remoteChromeS3Bucket, launchOptionForLambda, localChromePath, DEBUG } from './config';
 
 const s3 = new aws.S3({ apiVersion: '2006-03-01' });
@@ -50,33 +50,34 @@ const isBrowserAvailable = async (browser) => {
   return true;
 };
 
-const existsLocalChrome = () => new Promise((resolve, reject) => {
-  fs.exists(localChromePath, (exists) => {
-    console.log(exists);
-    resolve(exists);
-  });
-});
+const existsLocalChrome = async () => {
+  try {
+    return await fs.existsAsync(localChromePath);
+  } catch (e) {
+    return false;
+  }
+};
 
-const existsExecutableChrome = () => new Promise((resolve, reject) => {
-  fs.exists(executablePath, (exists) => {
-    console.log(exists);
-    resolve(exists);
-  });
-});
+const existsExecutableChrome = async () => {
+  try {
+    return await fs.existsAsync(executablePath);
+  } catch (e) {
+    return false;
+  }
+};
 
 const setupChrome = async () => {
   if (!await existsExecutableChrome()) {
     if (await existsLocalChrome()) {
       debugLog('setup local chrome');
-      await setupLocalChrome();
       console.log(executablePath);
+      console.log('files inside temp?', fs.existsSync(executablePath));
+      await setupLocalChrome();
       console.log('files inside temp?', fs.existsSync(executablePath));
     } else {
       debugLog('setup s3 chrome');
       await setupS3Chrome();
     }
-    // console.log(executablePath);
-    // console.log('files inside temp?', fs.existsSync(executablePath));
     debugLog('setup done');
   }
 };
