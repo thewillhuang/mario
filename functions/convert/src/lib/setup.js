@@ -10,6 +10,7 @@ const setupLocalChrome = () => {
     .pipe(tar.extract(path.join(__dirname, './tmp')));
   console.log(path.join(__dirname, './tmp'));
   console.log(fs.readdirSync(path.join(__dirname, './tmp/')));
+  console.log(fs.readdirSync('/tmp'));
 };
 
 const getBrowser = async (browser) => {
