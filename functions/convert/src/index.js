@@ -18,7 +18,7 @@ export default λ(async ({ Records }) => {
   const pdfBuffer = await generatePdfWithRawContent(browser, content);
   console.timeEnd('generate pdf');
 
-  console.timeEnd('upload pdf to destination bucket');
+  console.time('upload pdf to destination bucket');
   await uploadToS3(destBucket, key, pdfBuffer);
   console.timeEnd('upload pdf to destination bucket');
 });
