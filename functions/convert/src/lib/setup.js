@@ -6,7 +6,7 @@ import path from 'path';
 
 const setupLocalChrome = () => {
   console.log(path.join('headless_shell.tar.gz'));
-  fs.createReadStream(path.join('headless_shell.tar.gz'))
+  fs.createReadStream(path.join('./headless_shell.tar.gz'))
     .pipe(gunzip())
     .pipe(tar.extract('/tmp'));
 };
