@@ -67,18 +67,23 @@ const existsExecutableChrome = async () => {
 };
 
 const setupChrome = async () => {
-  if (!await existsExecutableChrome()) {
-    if (await existsLocalChrome()) {
-      debugLog('setup local chrome');
-      console.log(executablePath);
-      console.log('files inside temp?', fs.existsSync(executablePath));
-      await setupLocalChrome();
-      console.log('files inside temp?', fs.existsSync(executablePath));
-    } else {
-      debugLog('setup s3 chrome');
-      await setupS3Chrome();
+  try {
+    if (!await existsExecutableChrome()) {
+      if (await existsLocalChrome()) {
+        debugLog('setup local chrome');
+        console.log(executablePath);
+        console.log('files inside temp?', fs.existsSync(executablePath));
+        await setupLocalChrome();
+        console.log('files inside temp?', fs.existsSync(executablePath));
+      } else {
+        debugLog('setup s3 chrome');
+        await setupS3Chrome();
+      }
+      debugLog('setup done');
     }
-    debugLog('setup done');
+  } catch (e) {
+    console.log('setup chrome failed');
+    console.log(e);
   }
 };
 
