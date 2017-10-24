@@ -77,17 +77,20 @@ const setupChrome = async () => {
 };
 
 const getBrowser = (() => {
-  console.log('called getBrowser');
   let browser;
   return async () => {
     if (typeof browser === 'undefined' || !await isBrowserAvailable(browser)) {
       await setupChrome();
-      browser = await puppeteer.launch({
-        headless: true,
-        executablePath,
-        args: launchOptionForLambda,
-        dumpio: !!exports.DEBUG,
-      });
+      if (fs.existsSync(executablePath)) {
+        browser = await puppeteer.launch({
+          headless: true,
+          executablePath,
+          args: launchOptionForLambda,
+          dumpio: !!exports.DEBUG,
+        });
+      } else {
+        console.log('failed to extract tar');
+      }
       debugLog(async b => `launch done: ${await browser.version()}`);
     }
     return browser;
