@@ -69,13 +69,15 @@ const setupChrome = async () => {
     if (await existsLocalChrome()) {
       debugLog('setup local chrome');
       await setupLocalChrome();
+      console.log(executablePath);
+      console.log('files inside temp?', fs.existsSync(executablePath));
     } else {
       debugLog('setup s3 chrome');
       await setupS3Chrome();
     }
+    // console.log(executablePath);
+    // console.log('files inside temp?', fs.existsSync(executablePath));
     debugLog('setup done');
-    console.log(executablePath);
-    console.log('files inside temp?', fs.existsSync(executablePath));
   }
 };
 
