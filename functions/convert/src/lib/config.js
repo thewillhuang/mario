@@ -10,8 +10,6 @@ export const launchOptionForLambda = [
 ];
 
 export const localChromePath = path.join('headless_shell.tar.gz');
-export const remoteChromeS3Bucket = process.env.CHROME_BUCKET;
-export const remoteChromeS3Key = process.env.CHROME_KEY || 'headless_shell.tar.gz';
 
 export const setupChromePath = path.join(path.sep, 'tmp');
 export const executablePath = path.join(
