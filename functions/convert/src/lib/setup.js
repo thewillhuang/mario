@@ -64,6 +64,7 @@ const existsExecutableChrome = () => new Promise((resolve, reject) => {
 });
 
 const setupChrome = async () => {
+  console.log('executablePath', executablePath);
   if (!await existsExecutableChrome()) {
     if (await existsLocalChrome()) {
       console.log('setup local chrome');
