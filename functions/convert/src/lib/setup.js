@@ -40,6 +40,7 @@ const getBrowser = (() => {
       }
       return browser;
     } catch (e) {
+      console.log(e);
       return e;
     }
   };
