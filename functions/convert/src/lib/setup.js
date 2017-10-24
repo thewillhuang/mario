@@ -36,7 +36,7 @@ const getBrowser = (() => {
           args: launchOptionForLambda,
           dumpio: !!exports.DEBUG,
         });
-        debugLog(async b => `launch done: ${await browser.version()}`);
+        console.log(await browser.version());
       }
       return browser;
     } catch (e) {
