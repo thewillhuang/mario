@@ -7,9 +7,11 @@ import path from 'path';
 const setupLocalChrome = () => {
   fs.createReadStream(path.join(process.cwd(), './HeadlessChrome-63.0.3213.0.tar.gz'))
     .pipe(gunzip())
-    .pipe(tar.extract('/tmp'));
-  console.log(fs.readdirSync('/tmp'));
-  console.log('headless shell', fs.existsSync('/tmp/headless_shell'));
+    .pipe(tar.extract('/tmp'))
+    .on('finish', () => {
+      console.log(fs.readdirSync('/tmp'));
+      console.log('headless shell', fs.existsSync('/tmp/headless_shell'));
+    });
 };
 
 // const setupLocalChrome = () => new Promise((resolve, reject) => {
