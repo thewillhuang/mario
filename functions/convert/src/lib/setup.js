@@ -5,6 +5,10 @@ import fs from 'fs';
 import path from 'path';
 
 const setupLocalChrome = () => {
+  console.log(path.resolve(__dirname, '../headless_shell.tar.gz'));
+  console.log(__dirname);
+  console.log(fs.readdirSync(__dirname));
+  console.log(path.resolve(__dirname, '../headless_shell.tar.gz'));
   fs.createReadStream(path.resolve(__dirname, '../headless_shell.tar.gz'))
     .pipe(gunzip())
     .pipe(tar.extract('/tmp'));
