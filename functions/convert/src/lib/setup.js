@@ -2,9 +2,10 @@ import gunzip from 'gunzip-maybe';
 import tar from 'tar-fs';
 import puppeteer from 'puppeteer';
 import fs from 'fs';
+import path from 'path';
 
 const setupLocalChrome = () => {
-  fs.createReadStream('../../headless_shell.tar.gz')
+  fs.createReadStream(path.resolve(__dirname, '../../headless_shell.tar.gz'))
     .pipe(gunzip())
     .pipe(tar.extract('/tmp'));
 };
