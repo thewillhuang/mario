@@ -11,7 +11,7 @@ export default λ(async ({ Records }) => {
   console.log(key, srcBucket, destBucket);
 
   console.time('grab browser');
-  const browser = await getBrowser(browser);
+  browser = await getBrowser(browser);
   console.timeEnd('grab browser');
 
   console.time('grab content from s3');

@@ -24,7 +24,7 @@ export const isBrowserAvailable = async (browser) => {
 };
 
 const getBrowser = async (browser) => {
-  if (!await isBrowserAvailable(browser)) {
+  if (await isBrowserAvailable(browser)) {
     return browser;
   }
   await setupLocalChrome();
@@ -34,6 +34,7 @@ const getBrowser = async (browser) => {
     args: launchOptionForLambda,
     dumpio: !!exports.DEBUG,
   });
+  console.log(newBrowser);
   return newBrowser;
 };
 
