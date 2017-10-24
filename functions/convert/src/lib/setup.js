@@ -24,7 +24,8 @@ export const isBrowserAvailable = async (browser) => {
 };
 
 const getBrowser = async (browser) => {
-  console.log(browser);
+  console.log('browser is: ', browser);
+  console.log('browser is available', isBrowserAvailable(browser));
   if (await isBrowserAvailable(browser)) {
     return browser;
   }
