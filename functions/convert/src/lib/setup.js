@@ -56,7 +56,6 @@ const setupChrome = async () => {
       if (!fs.existsSync(localChromePath)) {
         debugLog('setup local chrome');
         console.log(executablePath);
-        console.log('files inside temp?', fs.existsSync(executablePath));
         await setupLocalChrome();
         console.log('files inside temp?', fs.existsSync(executablePath));
       } else {
