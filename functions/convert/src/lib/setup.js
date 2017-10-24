@@ -72,6 +72,8 @@ const setupChrome = async () => {
       await setupS3Chrome();
     }
     debugLog('setup done');
+    console.log(executablePath);
+    console.log('files inside temp?', fs.existsSync(executablePath));
   }
 };
 
