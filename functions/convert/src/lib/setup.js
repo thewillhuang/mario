@@ -1,8 +1,9 @@
 import aws from 'aws-sdk';
 import fs from 'fs';
-import tar from 'tar';
+import gunzip from 'gunzip-maybe';
+import tar from 'tar-fs';
 import puppeteer from 'puppeteer';
-import { executablePath, setupChromePath as cwd, remoteChromeS3Key, remoteChromeS3Bucket, launchOptionForLambda, localChromePath, DEBUG } from './config';
+import { executablePath, setupChromePath, remoteChromeS3Key, remoteChromeS3Bucket, launchOptionForLambda, localChromePath, DEBUG } from './config';
 
 const s3 = new aws.S3({ apiVersion: '2006-03-01' });
 
@@ -19,9 +20,8 @@ const debugLog = (log) => {
 const setupLocalChrome = () => new Promise((resolve, reject) => {
   fs.createReadStream(localChromePath)
     .on('error', err => reject(err))
-    .pipe(tar.extract({
-      cwd,
-    }))
+    .pipe(gunzip())
+    .pipe(tar.extract(setupChromePath))
     .on('error', err => reject(err))
     .on('end', () => resolve());
 });
@@ -34,9 +34,8 @@ const setupS3Chrome = () => new Promise((resolve, reject) => {
   s3.getObject(params)
     .createReadStream()
     .on('error', err => reject(err))
-    .pipe(tar.extract({
-      cwd,
-    }))
+    .pipe(gunzip())
+    .pipe(tar.extract(setupChromePath))
     .on('error', err => reject(err))
     .on('end', () => resolve());
 });
