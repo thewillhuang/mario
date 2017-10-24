@@ -3,13 +3,15 @@ import getBrowser from './lib/setup';
 import { generatePdfWithRawContent } from './lib/generate';
 import { getFromS3, uploadToS3 } from './lib/s3Helpers';
 
+let browser;
+
 export default λ(async ({ Records }) => {
   const { s3: { object: { key }, bucket: { name: srcBucket } } } = Records[0];
   const destBucket = `${srcBucket}-processed`;
   console.log(key, srcBucket, destBucket);
 
   console.time('grab browser');
-  const browser = await getBrowser();
+  const browser = await getBrowser(browser);
   console.timeEnd('grab browser');
 
   console.time('grab content from s3');

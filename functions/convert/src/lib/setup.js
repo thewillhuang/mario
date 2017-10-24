@@ -5,7 +5,7 @@ import puppeteer from 'puppeteer';
 import fs from 'fs';
 import { executablePath, setupChromePath, launchOptionForLambda, localChromePath } from './config';
 
-const setupLocalChrome = () => new Promise((resolve, reject) => {
+export const setupLocalChrome = () => new Promise((resolve, reject) => {
   fs.createReadStream(localChromePath)
     .on('error', err => reject(err))
     .pipe(gunzip())
@@ -14,7 +14,7 @@ const setupLocalChrome = () => new Promise((resolve, reject) => {
     .on('end', () => resolve());
 });
 
-const isBrowserAvailable = async (browser) => {
+export const isBrowserAvailable = async (browser) => {
   try {
     await browser.version();
   } catch (e) {
@@ -24,27 +24,18 @@ const isBrowserAvailable = async (browser) => {
   return true;
 };
 
-const getBrowser = (() => {
-  let browser;
-  return async () => {
-    try {
-      if (typeof browser === 'undefined' || !await isBrowserAvailable(browser)) {
-        console.log('no browser detected');
-        await setupLocalChrome();
-        browser = await puppeteer.launch({
-          headless: true,
-          executablePath,
-          args: launchOptionForLambda,
-          dumpio: !!exports.DEBUG,
-        });
-        console.log(await browser.version());
-      }
-      return browser;
-    } catch (e) {
-      console.log(e);
-      return e;
-    }
-  };
-})();
+const getBrowser = async (browser) => {
+  if (!await isBrowserAvailable(browser)) {
+    return browser;
+  }
+  await setupLocalChrome();
+  const newBrowser = await puppeteer.launch({
+    headless: true,
+    executablePath,
+    args: launchOptionForLambda,
+    dumpio: !!exports.DEBUG,
+  });
+  return newBrowser;
+};
 
 export default getBrowser;
