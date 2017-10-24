@@ -11,7 +11,7 @@ const setupLocalChrome = () => new Promise((resolve, reject) => {
     .on('error', err => reject(err))
     .pipe(tar.extract('/tmp'))
     .on('error', err => reject(err))
-    .on('end', () => resolve());
+    .on('end', () => resolve(true));
 });
 
 const getBrowser = async (browser) => {
@@ -19,7 +19,8 @@ const getBrowser = async (browser) => {
     if (browser !== false) {
       return browser;
     }
-    await setupLocalChrome();
+    const setup = await setupLocalChrome();
+    console.log(setup);
     console.log('tmp dir', fs.readdirSync('/tmp'));
     console.log('headless shell', fs.existsSync('/tmp/headless_shell'));
     return await puppeteer.launch({
