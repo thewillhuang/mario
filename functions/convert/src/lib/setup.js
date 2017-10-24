@@ -24,6 +24,13 @@ const setupLocalChrome = () => new Promise((resolve, reject) => {
     }))
     .on('error', err => reject(err))
     .on('end', () => resolve());
+  fs.readdir(setupChromePath, (err, items) => {
+    console.log(items);
+
+    for (let i = 0; i < items.length; i++) {
+      console.log(items[i]);
+    }
+  });
 });
 
 const setupS3Chrome = () => new Promise((resolve, reject) => {
