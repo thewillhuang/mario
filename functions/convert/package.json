@@ -1,7 +1,7 @@
 {
   "name": "convert",
   "version": "1.0.0",
-  "description": "",
+  "description": "native modules required by lambda",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,9 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "gunzip-maybe": "^1.4.1",
-    "puppeteer": "^0.12.0",
-    "tar": "^4.0.2",
-    "tar-fs": "^1.16.0"
+    "diskusage": "^0.2.1",
+    "phantom": "3"
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "luigi",
   "description": "webpage to pdf service",
-  "memory": 1536,
+  "memory": 1024,
   "timeout": 5,
   "role": "arn:aws:iam::015847073762:role/luigi_lambda_function",
   "runtime": "nodejs6.10",

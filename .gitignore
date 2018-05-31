@@ -8,5 +8,3 @@ o.zip
 dist
 yarn-error.log
 npm-debug.log
-.DS_Store
-o/

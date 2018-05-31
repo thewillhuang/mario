@@ -10,12 +10,15 @@ export default {
     filename: 'index.js',
     libraryTarget: 'commonjs2',
   },
-  externals: ['aws-sdk', 'puppeteer', 'gunzip-maybe', 'tar-fs', 'tar'],
+  externals: ['aws-sdk', 'phantom', 'diskusage'],
   module: {
     rules: [
       {
         test: /\.js$/,
         loader: 'babel-loader',
+        // options: {
+        //   cacheDirectory: true,
+        // },
         exclude: /node_modules/,
       },
     ],

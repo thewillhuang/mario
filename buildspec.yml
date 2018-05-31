@@ -5,20 +5,17 @@ phases:
     commands:
       - curl -o- -L https://yarnpkg.com/install.sh | bash
       - curl https://raw.githubusercontent.com/apex/apex/master/install.sh | sh
-      # - npm install
       - ~/.yarn/bin/yarn
-      - cd ./functions/convert && export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1 && ~/.yarn/bin/yarn
   # pre_build:
   #   commands:
   #     - echo Nothing to do in the pre_build phase...
   build:
     commands:
       - apex deploy
-      - apex build convert > ./o.zip
   # post_build:
   #   commands:
   #     - npm run publish
   #     - apex deploy
-artifacts:
-  files:
-    - o.zip
+# artifacts:
+#   files:
+#     - build/**/*
